@@ -1,0 +1,7 @@
+node_modules/
+typings/
+build/
+coverage/
+doc/
+.deployment
+deploy.cmd

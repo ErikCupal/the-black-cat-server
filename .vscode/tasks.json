@@ -1,0 +1,35 @@
+{
+  "version": "0.1.0",
+  "echoCommand": true,
+  "suppressTaskName": true,
+  "tasks": [
+    {
+      "taskName": "Webpack Development",
+      "command": "webpack",
+      "isShellCommand": true,
+      "isBuildCommand": true,
+      "isBackground": true,
+      "args": [
+        "-w"
+      ]
+    },
+    {
+      "taskName": "Webpack Production",
+      "command": "webpack",
+      "isShellCommand": true,
+      "args": [
+        "-w",
+        "--env.NODE_ENV=\"production\""
+      ]
+    },
+    {
+      "taskName": "Tests",
+      "command": "npm",
+      "isShellCommand": true,
+      "args": [
+        "test"
+      ],
+      "isTestCommand": true
+    }
+  ]
+}
