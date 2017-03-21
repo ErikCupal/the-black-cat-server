@@ -54,6 +54,7 @@
       "^.+\\.js$": "babel-jest",
       ".(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "/__tests__/.*\\.(ts|js)$"
+    "testRegex": "(/tests/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns":["constants"]
   }
 }
