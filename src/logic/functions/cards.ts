@@ -67,7 +67,7 @@ export const sortCardsByGreatestValue = (cards: Card[]): Card[] => {
     .sort(compareByRank)
     .reverse()
 }
-
+// TODO: Optimize this -> swap the functions -> better readability + performance
 export const sortCardsByLowestValue = (cards: Card[]): Card[] => {
   return sortCardsByGreatestValue(cards).reverse()
 }
