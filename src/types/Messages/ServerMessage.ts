@@ -12,7 +12,6 @@ type ServerMessage =
 
   | REGISTERED
   | NAME_TAKEN
-  | NAME_CHANGED
 
   | ROOM_CREATED
   | ROOM_NAME_TAKEN
@@ -46,7 +45,6 @@ export const CONNECTION_CONFIRMATION = 'CONNECTION_CONFIRMATION'
 
 export const REGISTERED = 'REGISTERED'
 export const NAME_TAKEN = 'NAME_TAKEN'
-export const NAME_CHANGED = 'NAME_CHANGED'
 
 export const ROOM_CREATED = 'ROOM_CREATED'
 export const ROOM_NAME_TAKEN = 'ROOM_NAME_TAKEN'
@@ -80,7 +78,6 @@ export type CONNECTION_CONFIRMATION = { type: typeof CONNECTION_CONFIRMATION }
 
 export type REGISTERED = { type: typeof REGISTERED, name: Name }
 export type NAME_TAKEN = { type: typeof NAME_TAKEN }
-export type NAME_CHANGED = { type: typeof NAME_CHANGED, name: Name }
 
 export type ROOM_CREATED = { type: typeof ROOM_CREATED, name: Name }
 export type ROOM_NAME_TAKEN = { type: typeof ROOM_NAME_TAKEN }
