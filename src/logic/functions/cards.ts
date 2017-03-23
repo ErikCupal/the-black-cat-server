@@ -61,15 +61,14 @@ export const compareBySuit = (a: Card, b: Card): -1 | 0 | 1 => {
   return 0
 }
 
-export const sortCardsByGreatestValue = (cards: Card[]): Card[] => {
+export const sortCardsByLowestValue = (cards: Card[]): Card[] => {
   return cards
     .sort(compareBySuit)
     .sort(compareByRank)
-    .reverse()
 }
-// TODO: Optimize this -> swap the functions -> better readability + performance
-export const sortCardsByLowestValue = (cards: Card[]): Card[] => {
-  return sortCardsByGreatestValue(cards).reverse()
+
+export const sortCardsByGreatestValue = (cards: Card[]): Card[] => {
+  return sortCardsByLowestValue(cards).reverse()
 }
 
 export const getCardPoints = (heartsGrillCoeficient: number, blackCatGrilled: boolean) => (card: Card): number => {
