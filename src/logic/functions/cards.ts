@@ -186,7 +186,7 @@ export const bestCardToPlay = (hand: Hand, grill: Grills, table: Table): Card =>
   const lowerCard = sortedPlayableCardsOfTableSuit
     .find(card => compareByRank(card, greatestCardOnTable) === -1)
 
-  const cardToPlay = lowerCard || sortedPlayableCardsOfTableSuit.reverse().first()
+  const cardToPlay = lowerCard || [...sortedPlayableCardsOfTableSuit].reverse().first()
 
   return cardToPlay
 }
