@@ -67,7 +67,7 @@ export const sortCardsByGreatestValue = (cards: Card[]): Card[] => {
     .sort(compareByRank)
     .reverse()
 }
-
+// TODO: Optimize this -> swap the functions -> better readability + performance
 export const sortCardsByLowestValue = (cards: Card[]): Card[] => {
   return sortCardsByGreatestValue(cards).reverse()
 }
@@ -75,7 +75,7 @@ export const sortCardsByLowestValue = (cards: Card[]): Card[] => {
 export const getCardPoints = (heartsGrillCoeficient: number, blackCatGrilled: boolean) => (card: Card): number => {
   switch (card.suit) {
     case 'Hearts': {
-      const basicPoints = (() => {
+      const basePoints = (() => {
         switch (card.rank) {
           case 'Seven': return 1
           case 'Eight': return 1
@@ -88,7 +88,7 @@ export const getCardPoints = (heartsGrillCoeficient: number, blackCatGrilled: bo
         }
       })()
 
-      return basicPoints * heartsGrillCoeficient
+      return basePoints * heartsGrillCoeficient
     }
     case 'Spades': {
       switch (card.rank) {
