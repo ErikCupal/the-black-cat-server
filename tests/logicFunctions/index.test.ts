@@ -1,8 +1,27 @@
-import { Cards } from '../constants'
+import { Game } from '../../src/types/Game'
+import { Cards, TheBlackCat } from '../constants'
 import { Card } from '../../src/types/Cards'
 import { Player } from '../../src/types/Player'
 import '../../src/polyfill'
-import { handOverIsValid, normalizePlayerIndex } from '../../src/logic/functions'
+import { grillIsValid, handOverIsValid, normalizePlayerIndex } from '../../src/logic/functions'
+
+const throwNotNeeded = (...args: any[]): never => { throw 'the function does not need this' }
+
+const playerTemplate: Player = {
+  name: 'player',
+  id: '1234',
+
+  hand: [],
+  handOver: [],
+  grills: [],
+  pile: [],
+
+  game: throwNotNeeded,
+  room: throwNotNeeded,
+  send: throwNotNeeded,
+  sendToOthers: throwNotNeeded,
+  sendToAll: throwNotNeeded,
+}
 
 test('normalizePlayerIndex works for values 0 - 8', () => {
   const indexes =
@@ -15,29 +34,6 @@ test('normalizePlayerIndex works for values 0 - 8', () => {
 
 describe('validators', () => {
   test('handOverIsValid', () => {
-
-    const throwNotNeeded = (...args: any[]): never => { throw 'the function does not need this' }
-
-    const playerTemplate: Player = {
-      name: 'player',
-      id: '1234',
-
-      hand: [],
-      handOver: [],
-      grills: [],
-      pile: [],
-
-      isBot: false,
-
-      waitForMe: true,
-      shouldPassHandOver: true,
-
-      game: throwNotNeeded,
-      room: throwNotNeeded,
-      send: throwNotNeeded,
-      sendToOthers: throwNotNeeded,
-      sendToAll: throwNotNeeded,
-    }
 
     const hand1 = [
       Cards.Clubs.Jack,
@@ -52,6 +48,8 @@ describe('validators', () => {
 
     const player1: Player = {
       ...playerTemplate,
+      waitForMe: true,
+      shouldPassHandOver: true,
       hand: hand1,
     }
 
@@ -89,5 +87,67 @@ describe('validators', () => {
     parameters.forEach(({ player, handOver, result }) => {
       expect(handOverIsValid(handOver, player)).toBe(result)
     })
+  })
+
+  test('grillIsValid', () => {
+
+    const hand1 = [
+      TheBlackCat,
+      Cards.Clubs.King,
+      Cards.Diamonds.Queen,
+      Cards.Hearts.Ace,
+      Cards.Hearts.King,
+      Cards.Hearts.Seven,
+      Cards.Spades.Jack,
+      Cards.Clubs.Nine,
+    ]
+
+    const game: Game = {
+      room: 'someRoom',
+      round: 0,
+      table: [],
+      grillsSnapshot: [],
+      playerOnTurn: 'someRandomGuy',
+    }
+
+    const player1: Player = {
+      ...playerTemplate,
+      waitForMe: true,
+      hand: hand1,
+      game: () => game,
+    }
+
+    const grill1 = [
+      Cards.Hearts.Seven,
+      Cards.Hearts.Ace,
+    ]
+
+    const grill2 = [
+      ...grill1,
+      Cards.Hearts.King,
+    ]
+
+    const grill3 = [
+      ...grill2,
+      Cards.Hearts.Jack,
+    ]
+
+    const grill4 = [TheBlackCat]
+
+    const parameters = [
+      { grill: grill1, result: false },
+      { grill: grill2, result: true },
+      { grill: grill3, result: false },
+      { grill: grill4, result: true },
+    ].map(({ grill, result }) => ({
+      grill,
+      result,
+      player: player1,
+    }))
+
+    parameters.forEach(({ player, grill, result }) => {
+      expect(grillIsValid(grill, player)).toBe(result)
+    })
+
   })
 })

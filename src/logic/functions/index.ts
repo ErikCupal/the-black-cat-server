@@ -53,6 +53,8 @@ export const grillIsValid = (grill: Card[], player: Player): boolean => {
 
   return !!game
     && game.round === 0
+    && !player.shouldPassHandOver
+    && !!player.waitForMe
     && (isBlackCatGrill() || isHeartsGrill())
 }
 
