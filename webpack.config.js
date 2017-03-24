@@ -29,21 +29,8 @@ const config = (debug) => ({
         test: /\.ts$/,
         exclude: /node_modules/,
         use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              "plugins": [
-                // ES Next
-                "babel-plugin-syntax-trailing-function-commas",
-                "babel-plugin-transform-class-properties",
-                "babel-plugin-transform-export-extensions",
-                "babel-plugin-transform-object-rest-spread"
-              ]
-            }
-          },
-          {
-            loader: 'ts-loader'
-          }
+          { loader: 'babel-loader' },
+          { loader: 'ts-loader' },
         ]
       },
     ]
