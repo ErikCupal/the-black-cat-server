@@ -27,12 +27,10 @@ export const normalizePlayerIndex = (index: number): number => {
 }
 
 export const handOverIsValid = (handOver: HandOver, player: Player): boolean => {
-  const game = player.game()
+  const { shouldPassHandOver } = player
   const matchingCards = player.hand.filter(cardIsIn(handOver))
 
-  return !!game
-    && game.round === 0
-    && matchingCards.length === 3
+  return matchingCards.length === 3
     && handOver.length === 3
     && player.hand.length === 8
 }
