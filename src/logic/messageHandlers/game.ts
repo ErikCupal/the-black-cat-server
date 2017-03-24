@@ -51,7 +51,7 @@ import {
   playerCanHaveDealtDeck,
   playerCanTakeHandOver,
   playerHasHandover,
-  playerHasSpaceForHandOver
+  playerHasExactSpaceForHandOver
 } from '../functions'
 import { createDeck } from '../functions/cards'
 
@@ -160,7 +160,7 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
       if (playerHasHandover(player)) {
         player.send({ type: DO_TAKE_HANDOVER, handOver: player.handOver })
       }
-      if (playerHasSpaceForHandOver(leftPlayer)) {
+      if (playerHasExactSpaceForHandOver(leftPlayer)) {
         leftPlayer.send({ type: DO_TAKE_HANDOVER, handOver })
       }
     }

@@ -101,10 +101,10 @@ export const playerCanBeReady = (player: Player): boolean => {
 
 export const playerHasHandover = (player: Player) => player.handOver.length === 3
 
-export const playerHasSpaceForHandOver = (player: Player) => player.hand.length === 5
+export const playerHasExactSpaceForHandOver = (player: Player) => player.hand.length === 5
 
 export const playerCanTakeHandOver = (player: Player): boolean => {
-  return playerHasHandover(player) && playerHasSpaceForHandOver(player)
+  return playerHasHandover(player) && playerHasExactSpaceForHandOver(player)
 }
 
 export const tableIsFull = (game: Game): boolean => {
