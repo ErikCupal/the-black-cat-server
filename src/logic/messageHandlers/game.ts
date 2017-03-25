@@ -115,7 +115,12 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
     dispatch({ type: STATE_ADD_SCORES, room: roomName, gameScores })
 
     const room = findRoom(roomName) as Room
-    room.send({ type: UPDATED_SCORES, scores: room.scores })
+    const latestScores = room.scores
+      .map(score => ({
+        player: score.player,
+        points: score.points.last(),
+      }))
+    room.send({ type: UPDATED_SCORES, scores: latestScores })
 
     dispatch({ type: STATE_REMOVE_GAME, room: roomName })
     getPlayersInRoom(roomName).forEach(player => {
