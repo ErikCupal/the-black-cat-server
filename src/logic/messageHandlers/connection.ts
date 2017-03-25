@@ -73,6 +73,8 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
         dispatch({ type: STATE_REMOVE_GAME, room: room.name })
         dispatch({ type: STATE_REMOVE_ROOM, room: room.name })
 
+        log(`❌🎮 Room ${room.name} removed.`)
+
         const roomNames = getRoomNames()
         getAllPlayers().forEach(player => {
           player.send({ type: AVAILABLE_ROOMS, roomNames })
