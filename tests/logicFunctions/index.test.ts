@@ -76,7 +76,7 @@ test('normalizePlayerIndex works for values 0 - 8', () => {
     .toEqual(normalizedIndexes)
 })
 
-describe('validators', () => {
+describe('validators work', () => {
   test('handOverIsValid', () => {
 
     const player1: Player = {

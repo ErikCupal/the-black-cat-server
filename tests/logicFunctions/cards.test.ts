@@ -124,12 +124,12 @@ describe('sorting cards', () => {
   ]
   const sortedByLowestValue = [...sortedByGreatestValue].reverse()
 
-  test('sorts cards by biggest value', () => {
+  test('sortCardsByGreatestValue', () => {
     const sortedCards = sortCardsByGreatestValue(cards)
     expect(sortedCards).toEqual(sortedByGreatestValue)
   })
 
-  test('sorts cards by lowest value', () => {
+  test('sortCardsByLowestValue', () => {
     const sortedCards = sortCardsByLowestValue(cards)
     expect(sortedCards).toEqual(sortedByLowestValue)
   })
@@ -276,7 +276,7 @@ test('getHighestCardOnTable', () => {
   expect(getHighestCardOnTable(table1)).toBe(Cards.Clubs.Ace)
 })
 
-test('bestCardToPlay works with', () => {
+test('bestCardToPlay returns correct card', () => {
   const hand1 = [
     Cards.Clubs.Seven,
     Cards.Spades.Eight,
