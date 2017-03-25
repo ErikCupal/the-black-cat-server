@@ -161,7 +161,11 @@ export const bestCardToPlay = (hand: Hand, grill: Grills, table: Table): Card =>
     if (cardNotEqual(lowestCard)(theBlackCatCard)) {
       return lowestCard
     } else {
-      return secondLowestCard
+      if (secondLowestCard) {
+        return secondLowestCard
+      } else {
+        return theBlackCatCard
+      }
     }
   }
 

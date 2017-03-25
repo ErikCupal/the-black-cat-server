@@ -298,6 +298,8 @@ test('bestCardToPlay returns correct card', () => {
     Cards.Hearts.King,
   ]
 
+  const hand4 = [TheBlackCat]
+
   const grill1 = [
     Cards.Hearts.Seven,
     Cards.Hearts.Ten,
@@ -321,14 +323,18 @@ test('bestCardToPlay returns correct card', () => {
   expect(bestCardToPlay(hand1, [], table1)).toEqual(Cards.Spades.Eight)
   expect(bestCardToPlay(hand2, [], table1)).toEqual(Cards.Diamonds.Ace)
   expect(bestCardToPlay(hand3, [], table2)).toEqual(Cards.Spades.Queen)
+  expect(bestCardToPlay(hand4, [], table2)).toEqual(Cards.Spades.Queen)
   expect(bestCardToPlay(hand1, [], emptyTable)).toEqual(Cards.Clubs.Seven)
   expect(bestCardToPlay(hand2, [], emptyTable)).toEqual(Cards.Clubs.Seven)
   expect(bestCardToPlay(hand3, [], emptyTable)).toEqual(Cards.Hearts.King)
+  expect(bestCardToPlay(hand4, [], emptyTable)).toEqual(Cards.Spades.Queen)
 
   expect(bestCardToPlay(hand1, grill1, table1)).toEqual(Cards.Spades.Eight)
   expect(bestCardToPlay(hand2, grill1, table1)).toEqual(Cards.Diamonds.Ace)
   expect(bestCardToPlay(hand3, grill1, table2)).toEqual(Cards.Spades.Queen)
+  expect(bestCardToPlay(hand4, grill1, table2)).toEqual(Cards.Spades.Queen)
   expect(bestCardToPlay(hand1, grill1, emptyTable)).toEqual(Cards.Clubs.Seven)
   expect(bestCardToPlay(hand2, grill1, emptyTable)).toEqual(Cards.Clubs.Seven)
   expect(bestCardToPlay(hand3, grill1, emptyTable)).toEqual(Cards.Hearts.Seven)
+  expect(bestCardToPlay(hand4, grill1, emptyTable)).toEqual(Cards.Hearts.Seven)
 })
