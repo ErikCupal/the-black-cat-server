@@ -136,7 +136,7 @@ export const getBotResponse = async (message: ServerMessage, di: BotResponseDI):
       return undefined
     }
     case NEXT_TURN: {
-      await seconds(1.5)
+      await seconds(0.8)
 
       const player = getPlayer()
       if (player && message.playerOnTurn === player.name) {
