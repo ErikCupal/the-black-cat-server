@@ -106,7 +106,7 @@ export const configureMessageHandlers = (core: Core, log: Logger, seconds: Secon
     [LOGIC_NEXT_ROUND]: handlers.onNextRound,
     [LOGIC_FINISH_ROUND]: handlers.onFinishRound,
     [LOGIC_GAME_END]: handlers.onGameEnd,
-    [LOGIC_ROOM_END]: () => { /*TODO: create function*/ },
+    [LOGIC_ROOM_END]: () => handlers.onLeaveRoom,
   }
 
   Object.entries(configuration)
