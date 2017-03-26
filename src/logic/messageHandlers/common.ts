@@ -10,7 +10,9 @@ export const createCommonMessageHandlers = ({ getRoomNames }: MessageHandlersDI)
   }
 
   const onSendChatMessage = ({ player, text }: SEND_CHAT_MESSAGE) => {
-    player.sendToAll({ type: CHAT_MESSAGE, text, player: player.name })
+    if (text.length <= 3000) {
+      player.sendToAll({ type: CHAT_MESSAGE, text, player: player.name })
+    }
   }
 
   return {

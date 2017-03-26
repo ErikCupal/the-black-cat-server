@@ -172,7 +172,7 @@ export const createCore = (io: SocketIO.Server, reducer: Reducer<State>): Core =
     })
 
     socket.on(MESSAGE, (stringifiedMessage: string | any) => {
-      if (typeof stringifiedMessage === 'string') {
+      if (typeof stringifiedMessage === 'string' && stringifiedMessage.length <= 20000) {
         const player = store.getState().players.find(player => player.id === socket.id)
         if (player) {
           const message = JSON.parse(stringifiedMessage)

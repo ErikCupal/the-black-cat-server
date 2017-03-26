@@ -132,7 +132,8 @@ export const createStateDependantFunctions = (getState: () => State) => {
 
   const playerCanCreateRoom = (name: Name, player: Player): boolean => {
     const playerCanCreateRoom =
-      !findPlayerInRoom(player.name, name)
+      name.length <= 100
+      && !findPlayerInRoom(player.name, name)
       && !roomExists(name)
       && !player.room()
       && getAllRooms().length < 4
@@ -154,7 +155,8 @@ export const createStateDependantFunctions = (getState: () => State) => {
 
   const playerCanRegister = (player: NonregisteredPlayer, name: Name): boolean => {
     const playerCanRegister =
-      !playerExists(name)
+      name.length <= 100
+      && !playerExists(name)
       && !player.name
 
     return playerCanRegister
