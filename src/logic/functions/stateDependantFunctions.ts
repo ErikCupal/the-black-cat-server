@@ -1,3 +1,4 @@
+import { botNicks } from '../constants'
 import returnof from 'returnof'
 import ServerMessage from '../../types/messages/ServerMessage'
 import { getBotResponse, normalizePlayerIndex } from '.'
@@ -185,41 +186,14 @@ export const createStateDependantFunctions = (getState: () => State) => {
 
   const botCreatorFactory = (dispatch: DispatchForBot, seconds: Seconds, log: Logger) => {
 
-    /**
-     * Nicks for bots
-     */
-    const nicks = [
-      'Geralt of Rivia',
-      'Crach an Craite',
-      'Emiel Regis Rohellec Terzieff-Godefroy',
-      'Vilgefortz',
-      'Yennefer of Vengerberg',
-      'Foltest',
-      'Dandelion',
-      'Yarpen Zigrin',
-      'Zoltan Chivay',
-      'Sigismund Dijkstra',
-      'Emhyr var Emreis',
-      'Lambert',
-      'Vesemir',
-      'Eskel',
-      'Fringilla Vigo',
-      'Vernon Roche',
-      'Moorvran Voorhis',
-      'Margarita Laux-Antille',
-      'Vimme Vivaldi',
-      'Keira Metz',
-      'Triss Marigold'
-    ]
-
-    const getRandomNick = () => {
-      return nicks
-        .filter(nick => !getAllPlayers().find(p => p.name === nick))
-        .shuffle()
-        .first()
-    }
-
     return (player?: NonregisteredPlayer): Bot => {
+
+      const getRandomNick = () => {
+        return botNicks
+          .filter(nick => !getAllPlayers().find(p => p.name === nick))
+          .shuffle()
+          .first()
+      }
 
       const nick = getRandomNick()
 
