@@ -66,7 +66,7 @@ export const createCore = (io: SocketIO.Server, reducer: Reducer<State>): Core =
   const store = createStore(reducer, devToolsEnhancer({
     name: 'The Black Cat',
     realtime: true,
-  }) as any) as Store<State>
+  }) as object) as Store<State>
 
   /**
    * The store can be used for logging all sorts of messages.
@@ -80,6 +80,7 @@ export const createCore = (io: SocketIO.Server, reducer: Reducer<State>): Core =
 
   /** see [Core.messageOfType] */
   const messageOfType = <T>(type: string): Observable<T> => {
+    // tslint:disable-next-line:no-any
     return subject.filter(message => message.type === type) as any
   }
 
@@ -171,7 +172,7 @@ export const createCore = (io: SocketIO.Server, reducer: Reducer<State>): Core =
       player: createdPlayer,
     })
 
-    socket.on(MESSAGE, (stringifiedMessage: string | any) => {
+    socket.on(MESSAGE, (stringifiedMessage: string | object | undefined) => {
       if (typeof stringifiedMessage === 'string' && stringifiedMessage.length <= 20000) {
         const player = store.getState().players.find(player => player.id === socket.id)
         if (player) {

@@ -66,6 +66,7 @@
       true,
       130
     ],
-    "jsdoc-format": true
+    "jsdoc-format": true,
+    "no-any": true
   }
 }
