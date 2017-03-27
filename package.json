@@ -44,7 +44,7 @@
     "ts-jest": "^19.0.1",
     "ts-loader": "^2.0.0",
     "typedoc": "^0.5.7",
-    "typescript": "^2.3.0-dev.20170219",
+    "typescript": "^2.3.0-dev.20170327",
     "webpack": "^2.2.1",
     "webpack-node-externals": "^1.5.4"
   },
