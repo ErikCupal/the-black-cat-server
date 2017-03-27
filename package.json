@@ -8,6 +8,7 @@
     "start": "npm run build && node --harmony ./build/index.js",
     "launch": "node --harmony ./build/index.js",
     "test": "jest",
+    "lint": "tslint ./src/**/*.ts ./tests/**/*.ts",
     "doc": "typedoc --options typedoc.json"
   },
   "author": {
@@ -43,6 +44,7 @@
     "remote-redux-devtools": "^0.5.7",
     "ts-jest": "^19.0.1",
     "ts-loader": "^2.0.0",
+    "tslint": "^4.5.1",
     "typedoc": "^0.5.7",
     "typescript": "^2.3.0-dev.20170327",
     "webpack": "^2.2.1",
