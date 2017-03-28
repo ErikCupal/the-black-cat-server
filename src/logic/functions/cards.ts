@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { Card, Deck, Grills, Hand, Pile, Rank, Suit, Table } from '../../types/Cards'
 
 export const theBlackCatCard: Card = { suit: 'Spades', rank: 'Queen' }
@@ -114,7 +115,7 @@ export const getPenaltyPoints = (grilledCards: Grills) => (pile: Pile): number =
 
   const blackCatGrilled = !!grilledCards.find(cardEqual(theBlackCatCard))
 
-  const points = pile
+  const points = _(pile)
     .map(getCardPoints(heartsGrillCoeficient, blackCatGrilled))
     .sum()
 
@@ -144,7 +145,7 @@ export const createDeck = (): Deck => {
 
 export const getHighestCardOnTable = (table: Table): Card => {
   const [firstCard] = table
-  const highestCard = table
+  const highestCard = _(table)
     .filter(cardIsOfSuit(firstCard.suit))
     .sort(compareByRank)
     .last()
@@ -190,7 +191,7 @@ export const bestCardToPlay = (hand: Hand, grill: Grills, table: Table): Card =>
   const lowerCard = sortedPlayableCardsOfTableSuit
     .find(card => compareByRank(card, greatestCardOnTable) === -1)
 
-  const cardToPlay = lowerCard || [...sortedPlayableCardsOfTableSuit].reverse().first()
+  const cardToPlay = lowerCard || _([...sortedPlayableCardsOfTableSuit]).reverse().first()
 
   return cardToPlay
 }

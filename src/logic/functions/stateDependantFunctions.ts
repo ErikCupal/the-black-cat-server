@@ -1,3 +1,4 @@
+import { shuffle } from 'lodash'
 import { botNicks } from '../constants'
 import returnof from 'returnof'
 import ServerMessage from '../../types/messages/ServerMessage'
@@ -184,15 +185,15 @@ export const createStateDependantFunctions = (getState: () => State) => {
     return room
   }
 
-  const botCreatorFactory = (dispatch: DispatchForBot, seconds: Seconds, log: Logger) => {
+  const botCreatorFactory = (dispatch: DispatchForBot, seconds: Seconds, log: Logger, shuffleArray: typeof shuffle) => {
 
     return (player?: NonregisteredPlayer): Bot => {
 
-      const getRandomNick = () => {
-        return botNicks
+      const getRandomNick = (): Name => {
+        const possibleBotNicks = botNicks
           .filter(nick => !getAllPlayers().find(p => p.name === nick))
-          .shuffle()
-          .first()
+        const [nick] = shuffleArray(possibleBotNicks)
+        return nick
       }
 
       const nick = getRandomNick()

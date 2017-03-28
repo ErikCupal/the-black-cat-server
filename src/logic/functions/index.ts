@@ -1,3 +1,4 @@
+import { first } from 'lodash'
 import { Logger, Seconds } from '../../functions'
 import { Card, Grills, Hand, HandOver, Table } from '../../types/Cards'
 import { Game } from '../../types/Game'
@@ -67,7 +68,7 @@ export const playedCardIsValid = (card: Card, player: Player): boolean => {
   )
 
   const playable = (): boolean => {
-    const firstTableCard = game && game.table.first()
+    const firstTableCard = game && first(game.table)
     if (!firstTableCard || card.suit === firstTableCard.suit) {
       return true
     }

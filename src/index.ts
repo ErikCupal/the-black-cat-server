@@ -1,4 +1,3 @@
-import './polyfill'
 import createServer from './server'
 import SocketIO from 'socket.io'
 import { createCore } from './core'

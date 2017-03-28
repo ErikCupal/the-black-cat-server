@@ -1,4 +1,4 @@
-import '../../src/polyfill'
+import { flatMap } from 'lodash'
 import { Card, Deck } from '../../src/types/Cards'
 
 export interface SuitOfCards {
@@ -63,4 +63,4 @@ export const Cards: Cards = {
 }
 
 export const TheBlackCat = Cards.Spades.Queen
-export const FullDeck: Deck = Object.values(Cards).flatMap(suit => Object.values(suit))
+export const FullDeck: Deck =  flatMap(Object.values(Cards), suit => Object.values(suit))

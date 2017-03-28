@@ -1,3 +1,4 @@
+import { shuffle, last, flatMap } from 'lodash'
 import { MessageHandlersDI } from '../'
 import { Name } from '../../types/Name'
 import {
@@ -71,7 +72,7 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
   } = di
 
   const dealCards = (room: Name) => {
-    const deck = createDeck().shuffle()
+    const deck = shuffle(createDeck())
     getPlayersInRoom(room).forEach((player, index) => {
       const range = {
         low: index * 8,
@@ -118,7 +119,7 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
     const latestScores = room.scores
       .map(score => ({
         player: score.player,
-        points: score.points.last(),
+        points: last(score.points),
       }))
     room.send({ type: UPDATED_SCORES, scores: latestScores })
 
@@ -206,8 +207,10 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
 
   const onPlayersReady = ({ roomName }: LOGIC_PLAYERS_READY) => {
     const room = findRoom(roomName) as Room
-    const roomGrills = getPlayersInRoom(roomName)
-      .flatMap(player => player.grills)
+    const roomGrills = flatMap(
+      getPlayersInRoom(roomName),
+      player => player.grills
+    )
 
     dispatch({ type: STATE_CREATE_GRILLS_SNAPSHOT, roomName, grills: roomGrills })
     dispatch({ type: STATE_NEXT_ROUND, room })

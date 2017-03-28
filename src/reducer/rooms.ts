@@ -104,10 +104,9 @@ const rooms = (state: Room[] = [], message: StateMessage): Room[] => {
             ...room,
             scores: room.scores
               .map(({ player, points }) => {
-                const playerScore = message.gameScores
+                const [playerScore] = message.gameScores
                   .filter(score => score.player === player)
                   .map(score => score.points)
-                  .first()
 
                 return {
                   player,

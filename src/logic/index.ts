@@ -1,3 +1,4 @@
+import { shuffle } from 'lodash'
 import { Core, Dispatch } from '../core'
 import { Logger, Seconds } from '../functions'
 import {
@@ -58,7 +59,7 @@ export const configureMessageHandlers = (core: Core, log: Logger, seconds: Secon
 
   const { dispatch, getState, messageOfType } = core
   const stateDependantFunctions = createStateDependantFunctions(getState)
-  const createBot = stateDependantFunctions.botCreatorFactory(dispatch, seconds, log)
+  const createBot = stateDependantFunctions.botCreatorFactory(dispatch, seconds, log, shuffle)
 
   const di: MessageHandlersDI = {
     ...stateDependantFunctions,
