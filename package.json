@@ -5,8 +5,8 @@
   "main": "./build/index.js",
   "scripts": {
     "build": "webpack",
-    "start": "npm run build && node --harmony ./build/index.js",
-    "launch": "node --harmony ./build/index.js",
+    "start": "npm run build && node ./build/index.js",
+    "launch": "node ./build/index.js",
     "test": "jest",
     "lint": "tslint ./src/**/*.ts ./tests/**/*.ts",
     "doc": "typedoc --options typedoc.json"
