@@ -1,4 +1,4 @@
-import { State } from '../types/State'
+import { State } from '../../types/State'
 import { Reducer, combineReducers } from 'redux'
 import players from './players'
 import rooms from './rooms'

@@ -8,8 +8,8 @@ import {
   STATE_REMOVE_ROOM,
   STATE_REPLACE_PLAYER_WITH_BOT,
   STATE_SET_GAME_STARTING_PLAYER
-} from '../types/messages/StateMessage'
-import { Room } from '../types/Room'
+} from '../../types/messages/StateMessage'
+import { Room } from '../../types/Room'
 
 /**
  * Rooms reducer

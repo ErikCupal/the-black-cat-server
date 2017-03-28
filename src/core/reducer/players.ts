@@ -1,4 +1,4 @@
-import { cardEqual, cardNotEqual, cardIsNotIn } from '../logic/functions/cards'
+import { cardEqual, cardNotEqual, cardIsNotIn } from '../../logic/functions/cards'
 import {
   default as StateMessage,
   STATE_ADD_BOT,
@@ -17,8 +17,8 @@ import {
   STATE_SET_PLAYER_WAIT_FOR_ME,
   STATE_SET_PLAYER_WANTS_NEW_GAME,
   STATE_TAKE_HANDOVER
-} from '../types/messages/StateMessage'
-import { Player } from '../types/Player'
+} from '../../types/messages/StateMessage'
+import { Player } from '../../types/Player'
 
 /**
  * Players reducer

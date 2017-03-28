@@ -1,4 +1,4 @@
-import { Game } from '../types/Game'
+import { Game } from '../../types/Game'
 import {
   default as StateMessage,
   STATE_CREATE_GAME,
@@ -9,8 +9,8 @@ import {
   STATE_PLAY_CARD,
   STATE_REMOVE_GAME,
   STATE_REPLACE_PLAYER_WITH_BOT
-} from '../types/messages/StateMessage'
-import { Name } from '../types/Name'
+} from '../../types/messages/StateMessage'
+import { Name } from '../../types/Name'
 
 /**
  * Games reducer

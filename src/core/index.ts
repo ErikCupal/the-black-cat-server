@@ -10,6 +10,7 @@ import { Subject, Observable } from 'rxjs'
 import { createStore, Store, Reducer } from 'redux'
 import isSafeMessage from './isSafeMessage'
 import devToolsEnhancer from 'remote-redux-devtools'
+import reducer from './reducer'
 
 /** 
  * It is responsible for sending and receiving internal and socket messages and for providing current game state.
@@ -49,7 +50,7 @@ const MESSAGE = 'MESSAGE'
  * @param io The SocketIO object responsible for socket communication.
  * @param reducer A pure function that takes current state and message and returns a new version of state.
  */
-export const createCore = (io: SocketIO.Server, reducer: Reducer<State>): Core => {
+export const createCore = (io: SocketIO.Server): Core => {
 
   /**
    * A plain [RxJS Subject](https://github.com/ReactiveX/rxjs/blob/master/doc/subject.md) used

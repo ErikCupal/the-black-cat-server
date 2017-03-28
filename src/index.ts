@@ -3,7 +3,6 @@ import SocketIO from 'socket.io'
 import { createCore } from './core'
 import { configureMessageHandlers } from './logic'
 import seconds from './seconds'
-import reducer from './reducer'
 
 const log = console.log
 
@@ -11,7 +10,7 @@ const log = console.log
 const port: number = process.env.PORT || 3000
 const server = createServer()
 const socketIO = SocketIO(server)
-const gameCore = createCore(socketIO, reducer)
+const gameCore = createCore(socketIO)
 
 configureMessageHandlers(gameCore, log, seconds)
 
