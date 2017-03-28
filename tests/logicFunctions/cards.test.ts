@@ -1,4 +1,3 @@
-import '../../src/polyfill'
 import { normalizePlayerIndex } from '../../src/logic/functions'
 import {
   bestCardToPlay,

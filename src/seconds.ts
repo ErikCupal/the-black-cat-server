@@ -16,9 +16,4 @@ const seconds = (seconds: number): Promise<void> => {
   return new Promise<void>((resolve, reject) => setTimeout(resolve, seconds * 1000))
 }
 
-/** Basic console log function. It can be swapped for other log function for production. */
-const log = console.log
-
-export type Seconds = typeof seconds
-export type Logger = typeof log
-export { log, seconds }
+export default seconds

@@ -60,7 +60,6 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
 
   const {
     dispatch,
-    log,
     findRoom,
     getPlayersInRoom,
     getRandomPlayer,

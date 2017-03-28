@@ -1,4 +1,3 @@
-import { Seconds } from '../../functions'
 import { PLAYER_JOINED } from '../../types/messages/ServerMessage'
 import { Bot } from '../../types/Player'
 import { STATE_ADD_BOT, STATE_SET_PLAYER_WANTS_NEW_GAME } from '../../types/messages/StateMessage'

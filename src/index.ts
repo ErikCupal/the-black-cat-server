@@ -1,9 +1,11 @@
 import createServer from './server'
 import SocketIO from 'socket.io'
 import { createCore } from './core'
-import { log, seconds } from './functions'
 import { configureMessageHandlers } from './logic'
+import seconds from './seconds'
 import reducer from './reducer'
+
+const log = console.log
 
 /** Port on which server listens */
 const port: number = process.env.PORT || 3000

@@ -2,7 +2,6 @@ import { Game } from '../../src/types/Game'
 import { Cards, TheBlackCat } from '../constants'
 import { Card, Hand, Table } from '../../src/types/Cards'
 import { Player } from '../../src/types/Player'
-import '../../src/polyfill'
 import {
   grillIsValid,
   handOverIsValid,

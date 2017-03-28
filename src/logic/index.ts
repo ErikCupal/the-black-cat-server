@@ -1,6 +1,5 @@
 import { shuffle } from 'lodash'
 import { Core, Dispatch } from '../core'
-import { Logger, Seconds } from '../functions'
 import {
   ADD_BOT,
   CONNECT,
@@ -44,8 +43,8 @@ export type MessageHandlersDI =
   StateDependantFunctions
   & {
     dispatch: Dispatch
-    log: Logger
-    seconds: Seconds,
+    log: typeof console.log
+    seconds: (seconds: number) => Promise<void>,
     createBot: (player: Player) => Bot
   }
 
@@ -53,13 +52,13 @@ export type MessageHandlersDI =
  * Creates message handlers with dependency injection and attaches them
  * to corresponding message types
  */
-export const configureMessageHandlers = (core: Core, log: Logger, seconds: Seconds) => {
+export const configureMessageHandlers = (core: Core, log: typeof console.log, seconds: (seconds: number) => Promise<void>) => {
 
   // Create dependency injection
 
   const { dispatch, getState, messageOfType } = core
   const stateDependantFunctions = createStateDependantFunctions(getState)
-  const createBot = stateDependantFunctions.botCreatorFactory(dispatch, seconds, log, shuffle)
+  const createBot = stateDependantFunctions.botCreatorFactory(dispatch, seconds, shuffle)
 
   const di: MessageHandlersDI = {
     ...stateDependantFunctions,

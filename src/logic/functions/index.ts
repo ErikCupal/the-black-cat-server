@@ -1,5 +1,4 @@
 import { first } from 'lodash'
-import { Logger, Seconds } from '../../functions'
 import { Card, Grills, Hand, HandOver, Table } from '../../types/Cards'
 import { Game } from '../../types/Game'
 import {
@@ -115,8 +114,7 @@ export const tableIsFull = (game: Game): boolean => {
 export const isLastRound = (round: number): boolean => round === 8
 
 interface BotResponseDI {
-  log: Logger
-  seconds: Seconds
+  seconds: (seconds: number) => Promise<void>
   getPlayer: () => Player | undefined
 }
 
@@ -125,7 +123,6 @@ export const getBotResponse = async (message: ServerMessage, di: BotResponseDI):
   const {
     seconds,
     getPlayer,
-    log,
   } = di
 
   switch (message.type) {

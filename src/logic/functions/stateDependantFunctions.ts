@@ -4,7 +4,6 @@ import returnof from 'returnof'
 import ServerMessage from '../../types/messages/ServerMessage'
 import { getBotResponse, normalizePlayerIndex } from '.'
 import { DispatchForBot } from '../../core'
-import { Logger, Seconds } from '../../functions'
 import { Game } from '../../types/Game'
 import { Id } from '../../types/Id'
 import { I_WANT_NEW_GAME } from '../../types/messages/ClientMessage'
@@ -185,7 +184,11 @@ export const createStateDependantFunctions = (getState: () => State) => {
     return room
   }
 
-  const botCreatorFactory = (dispatch: DispatchForBot, seconds: Seconds, log: Logger, shuffleArray: typeof shuffle) => {
+  const botCreatorFactory = (
+    dispatch: DispatchForBot,
+    seconds: (seconds: number) => Promise<void>,
+    shuffleArray: typeof shuffle
+  ) => {
 
     return (player?: NonregisteredPlayer): Bot => {
 
@@ -212,7 +215,6 @@ export const createStateDependantFunctions = (getState: () => State) => {
       const getPlayer = () => getState().players.find(p => p.name === nick)
 
       const di = {
-        log,
         seconds,
         getPlayer,
       }
