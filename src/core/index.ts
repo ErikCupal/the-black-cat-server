@@ -1,16 +1,12 @@
-import { Name } from '../types/Name'
-import { Id } from '../types/Id'
-import { STATE_CREATE_NEW_PLAYER } from '../types/messages/StateMessage'
-import ServerMessage from '../types/messages/ServerMessage'
-import StateMessage from '../types/messages/StateMessage'
+import StateMessage from '../types/Messages/StateMessage'
 import { State } from '../types/State'
-import { LogicMessage } from '../types/messages/LogicMessage'
-import { CONNECT, default as ClientMessage, DISCONNECT } from '../types/messages/ClientMessage'
+import { LogicMessage } from '../types/Messages/LogicMessage'
+import ClientMessage, { CONNECT } from '../types/Messages/ClientMessage'
 import { Subject, Observable } from 'rxjs'
 import { createStore, Store, Reducer } from 'redux'
-import isSafeMessage from './isSafeMessage'
 import devToolsEnhancer from 'remote-redux-devtools'
 import reducer from './reducer'
+import onSocketConnect from './onSocketConnect'
 
 /** 
  * It is responsible for sending and receiving internal and socket messages and for providing current game state.
@@ -90,118 +86,7 @@ export const createCore = (io: SocketIO.Server): Core => {
   }
 
   // Create new player when a socket connects and configure it
-  io.on(CONNECT, socket => {
-
-    const send = (message: ServerMessage, noLogging = false) => {
-      socket.emit(MESSAGE, message)
-    }
-
-    const getPlayerById = (id: Id) => store.getState().players.find(player => player.id === id)
-    const getPlayerByName = (name: Name) => store.getState().players.find(player => player.name === name)
-    const getRoomByPlayerName = (name: Name) => store.getState().rooms
-      .find(room => !!room.players.find(playerName => playerName === name))
-    const getGameByRoomName = (name: Name) => store.getState().games.find(game => game.room === name)
-
-    const sendToOthers = (message: ServerMessage) => {
-      const player = getPlayerById(socket.id)
-      if (player) {
-        const room = getRoomByPlayerName(player.name)
-        if (room) {
-          room.players.forEach(playerName => {
-            if (player.name !== playerName) {
-              const _player = getPlayerByName(playerName)
-              _player && _player.send(message)
-            }
-          })
-        }
-      }
-    }
-
-    const sendToAll = (message: ServerMessage) => {
-      const player = getPlayerById(socket.id)
-      if (player) {
-        const room = getRoomByPlayerName(player.name)
-        if (room) {
-          room.players.forEach(playerName => {
-            const _player = getPlayerByName(playerName)
-            _player && _player.send(message)
-          })
-        }
-      }
-    }
-
-    const room = () => {
-      const _player = getPlayerById(socket.id)
-      if (_player) {
-        const room = getRoomByPlayerName(_player.name)
-        return room
-      }
-      return undefined
-    }
-
-    const game = () => {
-      const _player = getPlayerById(socket.id)
-      if (_player) {
-        const room = getRoomByPlayerName(_player.name)
-        if (room) {
-          const game = getGameByRoomName(room.name)
-          return game
-        }
-      }
-      return undefined
-    }
-
-    const createdPlayer = {
-      id: socket.id,
-      hand: [],
-      handOver: [],
-      grills: [],
-      pile: [],
-
-      wantsNewGame: true,
-
-      room,
-      game,
-
-      send,
-      sendToOthers,
-      sendToAll,
-    }
-
-    store.dispatch({
-      type: STATE_CREATE_NEW_PLAYER,
-      player: createdPlayer,
-    })
-
-    socket.on(MESSAGE, (stringifiedMessage: string | object | undefined) => {
-      if (typeof stringifiedMessage === 'string' && stringifiedMessage.length <= 20000) {
-        const player = store.getState().players.find(player => player.id === socket.id)
-        if (player) {
-          const message = JSON.parse(stringifiedMessage)
-
-          if (isSafeMessage(message, player)) {
-            subject.next({
-              player,
-              ...message
-            })
-          }
-        }
-      }
-    })
-
-    socket.on(DISCONNECT, () => {
-      const player = store.getState().players.find(player => player.id === socket.id)
-      if (player) {
-        subject.next({ type: DISCONNECT, player })
-      }
-    })
-
-    subject.next({
-      type: CONNECT,
-      player: createdPlayer,
-    })
-
-  })
+  io.on(CONNECT, socket => onSocketConnect(socket, store, subject))
 
   return {
     getState: store.getState,
