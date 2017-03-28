@@ -1,3 +1,4 @@
+const path = require('path')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
 
@@ -11,7 +12,7 @@ const config = (debug) => ({
 
   output: {
     filename: 'index.js',
-    path: './build/'
+    path: path.resolve(__dirname, './build/')
   },
 
   devtool: 'source-map',

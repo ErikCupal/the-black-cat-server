@@ -8,13 +8,13 @@ import {
   PLAY_GRILL,
   PLAY_HAND_OVER,
   TAKE_HANDOVER
-} from '../../types/messages/ClientMessage'
+} from '../../types/Messages/ClientMessage'
 import {
   LOGIC_GAME_END,
   LOGIC_GAME_START,
   LOGIC_NEXT_ROUND,
   LOGIC_PLAYERS_READY
-} from '../../types/messages/LogicMessage'
+} from '../../types/Messages/LogicMessage'
 import {
   DEAL_DECK,
   DO_PASS_HANDOVER,
@@ -25,7 +25,7 @@ import {
   HAND_OVER_PLAYED,
   HAND_OVER_TAKEN,
   UPDATED_SCORES
-} from '../../types/messages/ServerMessage'
+} from '../../types/Messages/ServerMessage'
 import {
   STATE_ADD_SCORES,
   STATE_CARDS_TO_HAND,
@@ -42,7 +42,7 @@ import {
   STATE_SET_PLAYER_WAIT_FOR_ME,
   STATE_SET_PLAYER_WANTS_NEW_GAME,
   STATE_TAKE_HANDOVER
-} from '../../types/messages/StateMessage'
+} from '../../types/Messages/StateMessage'
 import { Player } from '../../types/Player'
 import { Room } from '../../types/Room'
 import {

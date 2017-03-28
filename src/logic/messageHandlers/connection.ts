@@ -1,6 +1,6 @@
 import { MessageHandlersDI } from '../'
-import { CONNECT, CREATE_ROOM, DISCONNECT, JOIN_ROOM, LEAVE_ROOM, REGISTER } from '../../types/messages/ClientMessage'
-import { LOGIC_PLAYER_JOINED_ROOM } from '../../types/messages/LogicMessage'
+import { CONNECT, CREATE_ROOM, DISCONNECT, JOIN_ROOM, LEAVE_ROOM, REGISTER } from '../../types/Messages/ClientMessage'
+import { LOGIC_PLAYER_JOINED_ROOM } from '../../types/Messages/LogicMessage'
 import {
   AVAILABLE_ROOMS,
   NAME_TAKEN,
@@ -10,7 +10,7 @@ import {
   ROOM_CREATED,
   ROOM_JOINED,
   ROOM_NAME_TAKEN
-} from '../../types/messages/ServerMessage'
+} from '../../types/Messages/ServerMessage'
 import {
   STATE_ADD_PLAYER_TO_ROOM,
   STATE_ADD_ROOM,
@@ -24,7 +24,7 @@ import {
   STATE_SET_PLAYER_SHOULD_PASS_HANDOVER,
   STATE_SET_PLAYER_WAIT_FOR_ME,
   STATE_SET_PLAYER_WANTS_NEW_GAME
-} from '../../types/messages/StateMessage'
+} from '../../types/Messages/StateMessage'
 import { Bot, Player } from '../../types/Player'
 import { Room } from '../../types/Room'
 

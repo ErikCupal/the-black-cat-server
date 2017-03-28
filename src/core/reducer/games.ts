@@ -9,7 +9,7 @@ import {
   STATE_PLAY_CARD,
   STATE_REMOVE_GAME,
   STATE_REPLACE_PLAYER_WITH_BOT
-} from '../../types/messages/StateMessage'
+} from '../../types/Messages/StateMessage'
 import { Name } from '../../types/Name'
 
 /**

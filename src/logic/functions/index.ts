@@ -9,7 +9,7 @@ import {
   PLAY_CARD,
   PLAY_HAND_OVER,
   TAKE_HANDOVER
-} from '../../types/messages/ClientMessage'
+} from '../../types/Messages/ClientMessage'
 import {
   DEAL_DECK,
   default as ServerMessage,
@@ -17,7 +17,7 @@ import {
   DO_TAKE_HANDOVER,
   GAME_ENDED,
   NEXT_TURN
-} from '../../types/messages/ServerMessage'
+} from '../../types/Messages/ServerMessage'
 import { Name } from '../../types/Name'
 import { Player } from '../../types/Player'
 import { bestCardToPlay, cardEqual, cardIsIn, cardIsOfSuit, sortCardsByGreatestValue } from './cards'

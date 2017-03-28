@@ -4,15 +4,15 @@ import { cardEqual } from '../functions/cards'
 import { isLastRound, playedCardIsValid, tableIsFull } from '../functions'
 import { MessageHandlersDI } from '../'
 import { Game } from '../../types/Game'
-import { PLAY_CARD } from '../../types/messages/ClientMessage'
-import { LOGIC_FINISH_ROUND, LOGIC_GAME_END, LOGIC_NEXT_ROUND } from '../../types/messages/LogicMessage'
-import { CARD_PLAYED, NEXT_ROUND, NEXT_TURN, TRICK_FINISHED } from '../../types/messages/ServerMessage'
+import { PLAY_CARD } from '../../types/Messages/ClientMessage'
+import { LOGIC_FINISH_ROUND, LOGIC_GAME_END, LOGIC_NEXT_ROUND } from '../../types/Messages/LogicMessage'
+import { CARD_PLAYED, NEXT_ROUND, NEXT_TURN, TRICK_FINISHED } from '../../types/Messages/ServerMessage'
 import {
   STATE_NEXT_ROUND,
   STATE_NEXT_TURN,
   STATE_PASS_TRICK,
   STATE_PLAY_CARD
-} from '../../types/messages/StateMessage'
+} from '../../types/Messages/StateMessage'
 import { Room } from '../../types/Room'
 
 export const createRoundMessageHandlers = (di: MessageHandlersDI) => {

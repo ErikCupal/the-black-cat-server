@@ -1,5 +1,5 @@
 import { NonregisteredPlayer } from '../types/Player'
-import ClientMessage from '../types/messages/ClientMessage'
+import ClientMessage from '../types/Messages/ClientMessage'
 
 /** Checks whether socket message received from client is safe */
 const isSafeMessage = (message: ClientMessage, player: NonregisteredPlayer) => {

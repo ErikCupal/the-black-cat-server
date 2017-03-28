@@ -17,7 +17,7 @@ import {
   STATE_SET_PLAYER_WAIT_FOR_ME,
   STATE_SET_PLAYER_WANTS_NEW_GAME,
   STATE_TAKE_HANDOVER
-} from '../../types/messages/StateMessage'
+} from '../../types/Messages/StateMessage'
 import { Player } from '../../types/Player'
 
 /**

@@ -1,6 +1,6 @@
 import { MessageHandlersDI } from '../'
-import { GET_ROOMS, SEND_CHAT_MESSAGE } from '../../types/messages/ClientMessage'
-import { AVAILABLE_ROOMS, CHAT_MESSAGE } from '../../types/messages/ServerMessage'
+import { GET_ROOMS, SEND_CHAT_MESSAGE } from '../../types/Messages/ClientMessage'
+import { AVAILABLE_ROOMS, CHAT_MESSAGE } from '../../types/Messages/ServerMessage'
 
 export const createCommonMessageHandlers = ({ getRoomNames }: MessageHandlersDI) => {
 

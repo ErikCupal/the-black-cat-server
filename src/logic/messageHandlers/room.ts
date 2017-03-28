@@ -1,9 +1,9 @@
-import { PLAYER_JOINED } from '../../types/messages/ServerMessage'
+import { PLAYER_JOINED } from '../../types/Messages/ServerMessage'
 import { Bot } from '../../types/Player'
-import { STATE_ADD_BOT, STATE_SET_PLAYER_WANTS_NEW_GAME } from '../../types/messages/StateMessage'
-import { ADD_BOT, I_WANT_NEW_GAME } from '../../types/messages/ClientMessage'
+import { STATE_ADD_BOT, STATE_SET_PLAYER_WANTS_NEW_GAME } from '../../types/Messages/StateMessage'
+import { ADD_BOT, I_WANT_NEW_GAME } from '../../types/Messages/ClientMessage'
 import { MessageHandlersDI } from '../'
-import { LOGIC_GAME_START, LOGIC_PLAYER_JOINED_ROOM, LOGIC_ROOM_START } from '../../types/messages/LogicMessage'
+import { LOGIC_GAME_START, LOGIC_PLAYER_JOINED_ROOM, LOGIC_ROOM_START } from '../../types/Messages/LogicMessage'
 import { Room } from '../../types/Room'
 
 export const createRoomMessageHandlers = (di: MessageHandlersDI) => {

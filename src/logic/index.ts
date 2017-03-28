@@ -17,7 +17,7 @@ import {
   REGISTER,
   SEND_CHAT_MESSAGE,
   TAKE_HANDOVER
-} from '../types/messages/ClientMessage'
+} from '../types/Messages/ClientMessage'
 import {
   LOGIC_FINISH_ROUND,
   LOGIC_GAME_END,
@@ -27,7 +27,7 @@ import {
   LOGIC_PLAYERS_READY,
   LOGIC_ROOM_END,
   LOGIC_ROOM_START
-} from '../types/messages/LogicMessage'
+} from '../types/Messages/LogicMessage'
 import { Bot, Player } from '../types/Player'
 import { createStateDependantFunctions, StateDependantFunctions } from './functions/stateDependantFunctions'
 import { createCommonMessageHandlers } from './messageHandlers/common'
