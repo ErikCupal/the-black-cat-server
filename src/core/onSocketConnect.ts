@@ -1,3 +1,4 @@
+import { SERVER_FULL } from '../types/Messages/ServerMessage'
 import isSafeMessage from './isSafeMessage'
 import { LogicMessage } from '../types/Messages/LogicMessage'
 import { State } from '../types/State'
@@ -17,6 +18,13 @@ const onSocketConnect = (
   store: Store<State>,
   subject: Subject<ClientMessage>
 ) => {
+
+  const playersCount = store.getState().players.length
+
+  if (playersCount > 32) {
+    socket.emit(MESSAGE, { type: SERVER_FULL })
+    socket.disconnect()
+  }
 
   const send = (message: ServerMessage) => {
     socket.emit(MESSAGE, message)

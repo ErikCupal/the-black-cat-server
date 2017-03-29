@@ -9,6 +9,7 @@ import { PlayerScore } from '../PlayerScore'
 type ServerMessage =
 
   | CONNECTION_CONFIRMATION
+  | SERVER_FULL
 
   | REGISTERED
   | NAME_TAKEN
@@ -42,6 +43,7 @@ type ServerMessage =
   | CHAT_MESSAGE
 
 export const CONNECTION_CONFIRMATION = 'CONNECTION_CONFIRMATION'
+export const SERVER_FULL = 'SERVER_FULL'
 
 export const REGISTERED = 'REGISTERED'
 export const NAME_TAKEN = 'NAME_TAKEN'
@@ -75,6 +77,7 @@ export const UPDATED_SCORES = 'UPDATED_SCORES'
 export const CHAT_MESSAGE = 'CHAT_MESSAGE'
 
 export type CONNECTION_CONFIRMATION = { type: typeof CONNECTION_CONFIRMATION }
+export type SERVER_FULL = { type: typeof SERVER_FULL }
 
 export type REGISTERED = { type: typeof REGISTERED, name: Name }
 export type NAME_TAKEN = { type: typeof NAME_TAKEN }
