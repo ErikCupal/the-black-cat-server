@@ -53,12 +53,16 @@ export const createStateDependantFunctions = (getState: () => State) => {
     return playersInRoom.find(p => p.name === player)
   }
 
-  const getRoomNames = (): Name[] => {
-    return getState().rooms.map(r => r.name)
-  }
-
   const getAllRooms = (): Room[] => {
     return getState().rooms
+  }
+
+  const getRoomNames = (): Name[] => {
+    return getAllRooms().map(r => r.name)
+  }
+
+  const getRoomNamesAndAvailability = (): { name: Name, available: boolean }[] => {
+    return getAllRooms().map(({ name, players }) => ({ name, available: players.length < 4 }))
   }
 
   const getAllPlayers = (): Player[] => {
@@ -313,6 +317,7 @@ export const createStateDependantFunctions = (getState: () => State) => {
     findGame,
     getPlayersInRoom,
     getRoomNames,
+    getRoomNamesAndAvailability,
     getAllPlayers,
     getPlayerOnLeftName,
     getPlayerOnLeft,

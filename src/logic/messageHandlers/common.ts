@@ -2,11 +2,11 @@ import { MessageHandlersDI } from '../'
 import { GET_ROOMS, SEND_CHAT_MESSAGE } from '../../types/Messages/ClientMessage'
 import { AVAILABLE_ROOMS, CHAT_MESSAGE } from '../../types/Messages/ServerMessage'
 
-export const createCommonMessageHandlers = ({ getRoomNames }: MessageHandlersDI) => {
+export const createCommonMessageHandlers = ({ getRoomNamesAndAvailability }: MessageHandlersDI) => {
 
   const onGetRooms = ({ player }: GET_ROOMS) => {
-    const roomNames = getRoomNames()
-    player.send({ type: AVAILABLE_ROOMS, roomNames })
+    const rooms = getRoomNamesAndAvailability()
+    player.send({ type: AVAILABLE_ROOMS, rooms })
   }
 
   const onSendChatMessage = ({ player, text }: SEND_CHAT_MESSAGE) => {

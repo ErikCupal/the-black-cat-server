@@ -1,4 +1,4 @@
-import { PLAYER_JOINED } from '../../types/Messages/ServerMessage'
+import { AVAILABLE_ROOMS, PLAYER_JOINED } from '../../types/Messages/ServerMessage'
 import { Bot } from '../../types/Player'
 import { STATE_ADD_BOT, STATE_SET_PLAYER_WANTS_NEW_GAME } from '../../types/Messages/StateMessage'
 import { ADD_BOT, I_WANT_NEW_GAME } from '../../types/Messages/ClientMessage'
@@ -8,7 +8,16 @@ import { Room } from '../../types/Room'
 
 export const createRoomMessageHandlers = (di: MessageHandlersDI) => {
 
-  const { dispatch, findRoom, log, getPlayersInRoom, createBot, seconds } = di
+  const {
+    dispatch,
+    findRoom,
+    log,
+    getPlayersInRoom,
+    createBot,
+    seconds,
+    getRoomNamesAndAvailability,
+    getAllPlayers,
+  } = di
 
   const onRoomStart = ({ name }: LOGIC_ROOM_START) => {
     dispatch({ type: LOGIC_GAME_START, roomName: name, newRoom: true })
@@ -47,7 +56,11 @@ export const createRoomMessageHandlers = (di: MessageHandlersDI) => {
 
       bot.hookIntoGame()
 
-      await seconds(0)
+      const rooms = getRoomNamesAndAvailability()
+      getAllPlayers().forEach(player => {
+        player.send({ type: AVAILABLE_ROOMS, rooms })
+      })
+
       dispatch({ type: LOGIC_PLAYER_JOINED_ROOM, name: room.name })
     }
   }

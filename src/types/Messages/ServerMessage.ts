@@ -103,8 +103,8 @@ export type GRILL_PLAYED = { type: typeof GRILL_PLAYED, player: Name, grill: Gri
 export type CARD_PLAYED = { type: typeof CARD_PLAYED, player: Name, card: Card, cardFromGrill: boolean }
 export type TRICK_FINISHED = { type: typeof TRICK_FINISHED, receiver: Name }
 
-export type AVAILABLE_ROOMS = { type: typeof AVAILABLE_ROOMS, roomNames: Name[] }
-export type UPDATED_SCORES = { type: typeof UPDATED_SCORES, scores: { player: Name, points: number}[] }
+export type AVAILABLE_ROOMS = { type: typeof AVAILABLE_ROOMS, rooms: { name: Name, available: boolean }[] }
+export type UPDATED_SCORES = { type: typeof UPDATED_SCORES, scores: { player: Name, points: number }[] }
 export type CHAT_MESSAGE = { type: typeof CHAT_MESSAGE, text: string, player: Name }
 
 export default ServerMessage

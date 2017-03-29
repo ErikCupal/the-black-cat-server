@@ -34,16 +34,23 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
     log,
     dispatch,
     playerCanRegister,
-    getRoomNames,
+    getRoomNamesAndAvailability,
+    getAllPlayers,
     playerCanCreateRoom,
     createRoom,
-    getAllPlayers,
     playerCanJoinRoom,
     findRoom,
     getPlayersInRoom,
     createBot,
     findPlayer,
   } = di
+
+  const sendAllPlayersRoomsList = () => {
+    const rooms = getRoomNamesAndAvailability()
+    getAllPlayers().forEach(player => {
+      player.send({ type: AVAILABLE_ROOMS, rooms })
+    })
+  }
 
   const onConnect = ({ player }: CONNECT) => {
     log(`🐵 New player with id ${player.id}.`)
@@ -75,10 +82,7 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
 
         log(`❌🎮 Room ${room.name} removed.`)
 
-        const roomNames = getRoomNames()
-        getAllPlayers().forEach(player => {
-          player.send({ type: AVAILABLE_ROOMS, roomNames })
-        })
+        sendAllPlayersRoomsList()
       }
     } else {
       dispatch({ type: STATE_REMOVE_PLAYER, id: player.id })
@@ -89,8 +93,8 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
     if (playerCanRegister(player, name)) {
       dispatch({ type: STATE_PLAYER_CHANGE_NAME, player: player as Player, name })
       player.send({ type: REGISTERED, name })
-      const roomNames = getRoomNames()
-      player.send({ type: AVAILABLE_ROOMS, roomNames })
+      const rooms = getRoomNamesAndAvailability()
+      player.send({ type: AVAILABLE_ROOMS, rooms })
       log(`🐲 Player ${player.id} registered under name ${name}.`)
     } else {
       player.send({ type: NAME_TAKEN })
@@ -105,10 +109,7 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
       log(`🎮👌 Player ${player.name} created room ${name}.`)
       player.send({ type: ROOM_CREATED, name })
 
-      const roomNames = getRoomNames()
-      getAllPlayers().forEach(player => {
-        player.send({ type: AVAILABLE_ROOMS, roomNames })
-      })
+      sendAllPlayersRoomsList()
     } else {
       player.send({ type: ROOM_NAME_TAKEN })
     }
@@ -122,6 +123,8 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
       const room = findRoom(name) as Room
       player.send({ type: ROOM_JOINED, name, players: room.players })
       player.sendToOthers({ type: PLAYER_JOINED, player: player.name })
+
+      sendAllPlayersRoomsList()
 
       dispatch({ type: LOGIC_PLAYER_JOINED_ROOM, roomName: room, name })
     }
@@ -155,10 +158,7 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
 
         log(`❌🎮 Room ${room.name} removed.`)
 
-        const roomNames = getRoomNames()
-        getAllPlayers().forEach(player => {
-          player.send({ type: AVAILABLE_ROOMS, roomNames })
-        })
+        sendAllPlayersRoomsList()
       }
     }
   }
