@@ -1,6 +1,6 @@
 {
   "name": "the-black-cat-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The server part of online multiplayer card game The Black Cat",
   "main": "./build/index.js",
   "scripts": {
