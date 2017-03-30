@@ -138,12 +138,6 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
         const bot: Bot = createBot(player)
         dispatch({ type: STATE_REPLACE_PLAYER_WITH_BOT, player: player.name as string, bot })
 
-        dispatch({ type: STATE_REMOVE_PLAYER_CARDS, player: player.name })
-        dispatch({ type: STATE_SET_PLAYER_PASSED_HANDOVER, player: player.name, value: false })
-        dispatch({ type: STATE_SET_PLAYER_SHOULD_PASS_HANDOVER, player: player.name, value: false })
-        dispatch({ type: STATE_SET_PLAYER_WANTS_NEW_GAME, player: player.name, value: true })
-        dispatch({ type: STATE_SET_PLAYER_WAIT_FOR_ME, player: player.name, value: false })
-
         room.send({ type: PLAYER_REPLACED_WITH_BOT, player: player.name as string, bot: bot.name })
 
         bot.hookIntoGame()
@@ -160,6 +154,12 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
 
         sendAllPlayersRoomsList()
       }
+
+      dispatch({ type: STATE_REMOVE_PLAYER_CARDS, player: player.name })
+      dispatch({ type: STATE_SET_PLAYER_PASSED_HANDOVER, player: player.name, value: false })
+      dispatch({ type: STATE_SET_PLAYER_SHOULD_PASS_HANDOVER, player: player.name, value: false })
+      dispatch({ type: STATE_SET_PLAYER_WANTS_NEW_GAME, player: player.name, value: true })
+      dispatch({ type: STATE_SET_PLAYER_WAIT_FOR_ME, player: player.name, value: false })
     }
   }
 
