@@ -207,7 +207,7 @@ export const createStateDependentFunctions = (getState: () => State) => {
 
         const player = getPlayer()
         if (player) {
-          const botMessages = await getBotResponse(message, { seconds, getPlayer })
+          const botMessages = await getBotResponse(message, seconds, getPlayer)
           const player = getPlayer()
           if (player && botMessages) {
             botMessages.forEach(message => {

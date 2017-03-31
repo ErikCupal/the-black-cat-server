@@ -183,7 +183,6 @@ export const bestCardToPlay = (hand: Hand, grill: Grills, table: Table): Card =>
   }
 
   const tableCardsOfTableSuit = table.filter(cardIsOfSuit(tableSuit))
-
   const [greatestCardOnTable] = sortCardsByGreatestValue(tableCardsOfTableSuit)
 
   const sortedPlayableCardsOfTableSuit = sortCardsByGreatestValue(playableCardsOfTableSuit)

@@ -1,24 +1,21 @@
+import { Card, HandOver } from '../../types/Cards'
 import { first } from 'lodash'
-import { Card, Grills, Hand, HandOver, Table } from '../../types/Cards'
 import { Game } from '../../types/Game'
-import {
+import ClientMessage, {
   DECK_DEALT,
-  default as ClientMessage,
   I_AM_READY,
   I_WANT_NEW_GAME,
   PLAY_CARD,
   PLAY_HAND_OVER,
   TAKE_HANDOVER
 } from '../../types/Messages/ClientMessage'
-import {
+import ServerMessage, {
   DEAL_DECK,
-  default as ServerMessage,
   DO_PASS_HANDOVER,
   DO_TAKE_HANDOVER,
   GAME_ENDED,
   NEXT_TURN
 } from '../../types/Messages/ServerMessage'
-import { Name } from '../../types/Name'
 import { Player } from '../../types/Player'
 import { bestCardToPlay, cardEqual, cardIsIn, cardIsOfSuit, sortCardsByGreatestValue } from './cards'
 
@@ -99,34 +96,23 @@ export const playerCanBeReady = (player: Player): boolean => {
     && player.handOver.length === 0
 }
 
-export const playerHasHandover = (player: Player) => player.handOver.length === 3
+export const playerHasHandover = (player: Player): boolean => player.handOver.length === 3
 
-export const playerHasExactSpaceForHandOver = (player: Player) => player.hand.length === 5
+export const playerHasExactSpaceForHandOver = (player: Player): boolean => player.hand.length === 5
 
 export const playerCanTakeHandOver = (player: Player): boolean => {
   return playerHasHandover(player) && playerHasExactSpaceForHandOver(player)
 }
 
-export const tableIsFull = (game: Game): boolean => {
-  return game.table.length === 4
-}
+export const tableIsFull = (game: Game): boolean => game.table.length === 4
 
 export const isLastRound = (round: number): boolean => round === 8
 
-/**
- * Dependency injection for getBotResponse function
- */
-interface BotResponseDI {
-  seconds: (seconds: number) => Promise<void>
-  getPlayer: () => Player | undefined
-}
-
-export const getBotResponse = async (message: ServerMessage, di: BotResponseDI): Promise<ClientMessage[] | undefined> => {
-
-  const {
-    seconds,
-    getPlayer,
-  } = di
+export const getBotResponse = async (
+  message: ServerMessage,
+  seconds: (seconds: number) => Promise<void>,
+  getPlayer: () => Player | undefined,
+): Promise<ClientMessage[] | undefined> => {
 
   switch (message.type) {
     case GAME_ENDED: {
@@ -187,7 +173,7 @@ export const getBotResponse = async (message: ServerMessage, di: BotResponseDI):
       }
       return undefined
     }
+    default:
+      return undefined
   }
-
-  return undefined
 }
