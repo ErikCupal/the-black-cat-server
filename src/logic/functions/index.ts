@@ -66,7 +66,7 @@ export const playedCardIsValid = (card: Card, player: Player): boolean => {
     !!player.grills.find(cardEqual(card))
   )
 
-  const playable = (): boolean => {
+  const isPlayable = (): boolean => {
     const firstTableCard = game && first(game.table)
     if (!firstTableCard || card.suit === firstTableCard.suit) {
       return true
@@ -82,7 +82,7 @@ export const playedCardIsValid = (card: Card, player: Player): boolean => {
   return !!game
     && game.playerOnTurn === player.name
     && cardMatchesPlayersCard()
-    && playable()
+    && isPlayable()
 }
 
 export const playerCanHaveDealtDeck = (player: Player): boolean => {
@@ -113,6 +113,9 @@ export const tableIsFull = (game: Game): boolean => {
 
 export const isLastRound = (round: number): boolean => round === 8
 
+/**
+ * Dependency injection for getBotResponse function
+ */
 interface BotResponseDI {
   seconds: (seconds: number) => Promise<void>
   getPlayer: () => Player | undefined

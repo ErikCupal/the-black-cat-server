@@ -14,7 +14,7 @@ import { Room } from '../../types/Room'
 import { State } from '../../types/State'
 import { getHighestCardOnTable, getPenaltyPoints } from './cards'
 
-export const createStateDependantFunctions = (getState: () => State) => {
+export const createStateDependentFunctions = (getState: () => State) => {
 
   const findPlayer = (playerName: string | undefined): Player | undefined => {
     const { players } = getState()
@@ -339,7 +339,7 @@ export const createStateDependantFunctions = (getState: () => State) => {
   }
 }
 
-const createFunctionsReturnValue = returnof(createStateDependantFunctions)
+const createFunctionsReturnValue = returnof(createStateDependentFunctions)
 
 /**
  * Object of various functions, which can read

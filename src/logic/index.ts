@@ -25,11 +25,10 @@ import {
   LOGIC_NEXT_ROUND,
   LOGIC_PLAYER_JOINED_ROOM,
   LOGIC_PLAYERS_READY,
-  LOGIC_ROOM_END,
   LOGIC_ROOM_START
 } from '../types/Messages/LogicMessage'
 import { Bot, Player } from '../types/Player'
-import { createStateDependantFunctions, StateDependantFunctions } from './functions/stateDependantFunctions'
+import { createStateDependentFunctions, StateDependantFunctions } from './functions/stateDependentFunctions'
 import { createCommonMessageHandlers } from './messageHandlers/common'
 import { createConnectionMessageHandlers } from './messageHandlers/connection'
 import { createGameMessageHandlers } from './messageHandlers/game'
@@ -57,7 +56,7 @@ export const configureMessageHandlers = (core: Core, log: typeof console.log, se
   // Create dependency injection
 
   const { dispatch, getState, messageOfType } = core
-  const stateDependantFunctions = createStateDependantFunctions(getState)
+  const stateDependantFunctions = createStateDependentFunctions(getState)
   const createBot = stateDependantFunctions.botCreatorFactory(dispatch, seconds, shuffle)
 
   const di: MessageHandlersDI = {
@@ -106,7 +105,6 @@ export const configureMessageHandlers = (core: Core, log: typeof console.log, se
     [LOGIC_NEXT_ROUND]: handlers.onNextRound,
     [LOGIC_FINISH_ROUND]: handlers.onFinishRound,
     [LOGIC_GAME_END]: handlers.onGameEnd,
-    [LOGIC_ROOM_END]: () => handlers.onLeaveRoom,
   }
 
   Object.entries(configuration)
