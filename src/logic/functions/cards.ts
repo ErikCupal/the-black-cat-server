@@ -63,7 +63,7 @@ export const compareBySuit = (a: Card, b: Card): -1 | 0 | 1 => {
 }
 
 export const sortCardsByLowestValue = (cards: Card[]): Card[] => {
-  return cards
+  return [...cards]
     .sort(compareBySuit)
     .sort(compareByRank)
 }
