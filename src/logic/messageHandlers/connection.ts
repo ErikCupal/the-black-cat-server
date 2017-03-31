@@ -42,7 +42,6 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
     findRoom,
     getPlayersInRoom,
     createBot,
-    findPlayer,
   } = di
 
   const sendAllPlayersRoomsList = () => {

@@ -21,11 +21,6 @@ export const createStateDependentFunctions = (getState: () => State) => {
     return players.find(p => p.name === playerName)
   }
 
-  const findPlayerById = (id: Id): Player | undefined => {
-    const { players } = getState()
-    return players.find(p => p.id === id)
-  }
-
   const findRoom = (roomName: string | undefined): Room | undefined => {
     const { rooms } = getState()
     return rooms.find(r => r.name === roomName)
@@ -53,21 +48,14 @@ export const createStateDependentFunctions = (getState: () => State) => {
     return playersInRoom.find(p => p.name === player)
   }
 
-  const getAllRooms = (): Room[] => {
-    return getState().rooms
-  }
-
-  const getRoomNames = (): Name[] => {
-    return getAllRooms().map(r => r.name)
-  }
+  const getAllRooms = (): Room[] => getState().rooms
 
   const getRoomNamesAndAvailability = (): { name: Name, available: boolean }[] => {
-    return getAllRooms().map(({ name, players }) => ({ name, available: players.length < 4 }))
+    return getAllRooms()
+      .map(({ name, players }) => ({ name, available: players.length < 4 }))
   }
 
-  const getAllPlayers = (): Player[] => {
-    return getState().players
-  }
+  const getAllPlayers = (): Player[] => getState().players
 
   const getPlayerOnLeftName = (playerName: string): string => {
     const player = findPlayer(playerName) as Player
@@ -125,15 +113,18 @@ export const createStateDependentFunctions = (getState: () => State) => {
       }))
   }
 
+  const getRandomNick = (shuffleArray: typeof shuffle): Name => {
+    const possibleBotNicks = botNicks
+      .filter(nick => !getAllPlayers().find(p => p.name === nick))
+    const [nick] = shuffleArray(possibleBotNicks)
+    return nick
+  }
+
   // validators
 
-  const playerExists = (name: string | undefined): boolean => {
-    return !!findPlayer(name)
-  }
+  const playerExists = (name: string | undefined): boolean => !!findPlayer(name)
 
-  const roomExists = (name: string | undefined): boolean => {
-    return !!findRoom(name)
-  }
+  const roomExists = (name: string | undefined): boolean => !!findRoom(name)
 
   const playerCanCreateRoom = (name: Name, player: Player): boolean => {
     const playerCanCreateRoom =
@@ -194,16 +185,9 @@ export const createStateDependentFunctions = (getState: () => State) => {
     shuffleArray: typeof shuffle
   ) => {
 
-    return (player?: NonregisteredPlayer): Bot => {
+    const createBot = (player?: NonregisteredPlayer): Bot => {
 
-      const getRandomNick = (): Name => {
-        const possibleBotNicks = botNicks
-          .filter(nick => !getAllPlayers().find(p => p.name === nick))
-        const [nick] = shuffleArray(possibleBotNicks)
-        return nick
-      }
-
-      const nick = getRandomNick()
+      const nick = getRandomNick(shuffleArray)
 
       const room = () => {
         const room = getState().rooms.find(r => !!r.players.find(player => player === nick))
@@ -216,19 +200,14 @@ export const createStateDependentFunctions = (getState: () => State) => {
         return game
       }
 
-      const getPlayer = () => getState().players.find(p => p.name === nick)
-
-      const di = {
-        seconds,
-        getPlayer,
-      }
+      const getPlayer = () => findPlayer(nick)
 
       const send = async (message: ServerMessage) => {
         await seconds(0)
 
         const player = getPlayer()
         if (player) {
-          const botMessages = await getBotResponse(message, di)
+          const botMessages = await getBotResponse(message, { seconds, getPlayer })
           const player = getPlayer()
           if (player && botMessages) {
             botMessages.forEach(message => {
@@ -239,7 +218,7 @@ export const createStateDependentFunctions = (getState: () => State) => {
       }
 
       const hookIntoGame = () => {
-        const bot = findPlayer(nick) as Bot
+        const bot = getPlayer() as Bot
         const room = bot.room() as Room
 
         const game = bot.game()
@@ -306,29 +285,26 @@ export const createStateDependentFunctions = (getState: () => State) => {
 
       return bot
     }
+
+    return createBot
   }
 
 
   return {
 
     findPlayer,
-    findPlayerById,
     findRoom,
     findGame,
     getPlayersInRoom,
-    getRoomNames,
     getRoomNamesAndAvailability,
     getAllPlayers,
     getPlayerOnLeftName,
     getPlayerOnLeft,
-    getRandomPlayer,
     getGameStartingPlayer,
     getPlayerWithHighestCard,
     getGameScores,
 
     // validators
-    playerExists,
-    roomExists,
     playerCanCreateRoom,
     playerCanJoinRoom,
     playerCanRegister,
@@ -342,7 +318,7 @@ export const createStateDependentFunctions = (getState: () => State) => {
 const createFunctionsReturnValue = returnof(createStateDependentFunctions)
 
 /**
- * Object of various functions, which can read
+ * Object of functions, which can read
  * the current version of state via injected [getState] function,
  * but do not produce any other side effects.
  */

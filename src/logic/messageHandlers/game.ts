@@ -62,8 +62,6 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
     dispatch,
     findRoom,
     getPlayersInRoom,
-    getRandomPlayer,
-    getPlayerOnLeftName,
     seconds,
     getGameScores,
     getPlayerOnLeft,
