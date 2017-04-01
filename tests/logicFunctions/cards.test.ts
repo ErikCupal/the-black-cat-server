@@ -313,6 +313,8 @@ test('bestCardToPlay returns correct card', () => {
   ]
 
   const hand4 = [THE_BLACK_CAT_CARD]
+  const hand5 = [...hand4, CARDS.HEARTS.KING]
+  const hand6 = [...hand4, CARDS.SPADES.KING]
 
   const grill1 = [
     CARDS.HEARTS.SEVEN,
@@ -351,4 +353,7 @@ test('bestCardToPlay returns correct card', () => {
   expect(bestCardToPlay(hand2, grill1, emptyTable)).toEqual(CARDS.CLUBS.SEVEN)
   expect(bestCardToPlay(hand3, grill1, emptyTable)).toEqual(CARDS.HEARTS.SEVEN)
   expect(bestCardToPlay(hand4, grill1, emptyTable)).toEqual(CARDS.HEARTS.SEVEN)
+
+  expect(bestCardToPlay(hand5, [], emptyTable)).toEqual(CARDS.HEARTS.KING)
+  expect(bestCardToPlay(hand6, [], emptyTable)).toEqual(CARDS.SPADES.KING)
 })

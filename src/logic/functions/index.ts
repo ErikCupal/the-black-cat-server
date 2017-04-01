@@ -126,7 +126,12 @@ export const playersAreReadyToPlay = (players: Player[]): boolean => {
 }
 
 export const playersHaveDeckDealt = (players: Player[]): boolean => {
-  const playersWithDeckDealt = players.filter(p => p.waitForMe === false)
+  const playersWithDeckDealt = players
+    .filter(p => {
+      return p.waitForMe === false
+        && p.hand.length === 8
+        && p.handOver.length === 0
+    })
   return playersWithDeckDealt.length === 4
 }
 
