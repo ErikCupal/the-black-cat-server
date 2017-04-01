@@ -58,7 +58,7 @@ import {
   playerHasHandover,
   playersHaveDeckDealt
 } from '../functions'
-import { createDeck } from '../functions/cards'
+import { createDeck, getPlayerHand } from '../functions/cards'
 
 export const createGameMessageHandlers = (di: MessageHandlersDI) => {
 
@@ -75,11 +75,7 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
   const dealCards = (room: Name) => {
     const deck = shuffle(createDeck())
     getPlayersInRoom(room).forEach((player, index) => {
-      const range = {
-        low: index * 8,
-        high: index * 8 + 8
-      }
-      const hand = deck.filter((card, cardIndex) => cardIndex >= range.low && cardIndex < range.high)
+      const hand = getPlayerHand(deck, index)
       dispatch({ type: STATE_CARDS_TO_HAND, player: player.name, cards: hand })
       dispatch({
         type: STATE_SET_PLAYER_WAIT_FOR_ME,

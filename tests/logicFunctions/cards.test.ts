@@ -12,12 +12,13 @@ import {
   getCardPoints,
   getHighestCardOnTable,
   getPenaltyPoints,
+  getPlayerHand,
   getRankAsNumber,
   getSuitAsNumber,
   sortCardsByGreatestValue,
   sortCardsByLowestValue
 } from '../../src/logic/functions/cards'
-import { Card, Deck, Grills, Rank, Suit, Table } from '../../src/types/Cards'
+import { Card, Deck, Grills, Hand, Rank, Suit, Table } from '../../src/types/Cards'
 import { Cards, FullDeck, TheBlackCat } from '../constants'
 
 describe('validators', () => {
@@ -263,6 +264,19 @@ test('getPenaltyPoints works for full deck', () => {
 
 test('createDeck', () => {
   expect(createDeck()).toEqual(FullDeck)
+})
+
+test('getPlayerHand', () => {
+  const deck = FullDeck
+  const hand1: Hand = Object.values(Cards.Spades)
+  const hand2: Hand = Object.values(Cards.Hearts)
+  const hand3: Hand = Object.values(Cards.Diamonds)
+  const hand4: Hand = Object.values(Cards.Clubs)
+
+  expect(getPlayerHand(deck, 0)).toEqual(hand1)
+  expect(getPlayerHand(deck, 1)).toEqual(hand2)
+  expect(getPlayerHand(deck, 2)).toEqual(hand3)
+  expect(getPlayerHand(deck, 3)).toEqual(hand4)
 })
 
 test('getHighestCardOnTable', () => {

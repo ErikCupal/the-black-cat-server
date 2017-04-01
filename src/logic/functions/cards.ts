@@ -143,6 +143,17 @@ export const createDeck = (): Deck => {
   return deck
 }
 
+export const getPlayerHand = (deck: Deck, playerIndex: number): Hand => {
+  const cardsRange = {
+    low: playerIndex * 8,
+    high: playerIndex * 8 + 8,
+  }
+  const hand = deck
+    .filter((card, cardIndex) => cardIndex >= cardsRange.low && cardIndex < cardsRange.high)
+    
+  return hand
+}
+
 export const getHighestCardOnTable = (table: Table): Card => {
   const [firstCard] = table
   const highestCard = _(table)
