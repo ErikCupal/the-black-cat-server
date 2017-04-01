@@ -1,6 +1,6 @@
 import { Name } from './Name'
 
 export interface PlayerScore {
-  player: Name
-  points: number[]
+  readonly player: Name
+  readonly points: number[]
 }

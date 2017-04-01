@@ -48,6 +48,7 @@ import { Room } from '../../types/Room'
 import {
   arePlayersReadyToPlay,
   createLatestScores,
+  getPlayersGrills,
   grillIsValid,
   handOverIsValid,
   playerCanBeReady,
@@ -104,11 +105,11 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
     dispatch({ type: STATE_CREATE_GAME, room: roomName, playerOnTurn: gameStartingPlayer })
     await seconds(1)
 
-    const room = findRoom(roomName) as Room
-    room.send({ type: GAME_STARTED })
-    await seconds(1)
-
-    dealCards(roomName)
+    const room = findRoom(roomName)
+    if (room) {
+      room.send({ type: GAME_STARTED })
+      dealCards(roomName)
+    }
   }
 
   const onGameEnd = ({ roomName }: LOGIC_GAME_END) => {
@@ -197,10 +198,7 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
 
   const onPlayersReady = ({ roomName }: LOGIC_PLAYERS_READY) => {
     const room = findRoom(roomName) as Room
-    const roomGrills = flatMap(
-      getPlayersInRoom(roomName),
-      player => player.grills
-    )
+    const roomGrills = getPlayersGrills(getPlayersInRoom(roomName))
 
     dispatch({ type: STATE_CREATE_GRILLS_SNAPSHOT, roomName, grills: roomGrills })
     dispatch({ type: STATE_NEXT_ROUND, room })

@@ -22,9 +22,9 @@ export interface NonregisteredPlayer {
   readonly didPassedHandOver?: boolean
   readonly wantsNewGame?: boolean
 
-  /** @returns the player's room or undefined if there is none */
+  /** Returns the player's room or undefined if there is none */
   readonly room: () => Room | undefined
-  /** @returns the player's game or undefined if there is none */
+  /** Returns the player's game or undefined if there is none */
   readonly game: () => Game | undefined
 
   /** Send socket message to the client */
@@ -41,6 +41,8 @@ export interface Player extends NonregisteredPlayer {
 }
 
 /**
+ * Bot
+ * 
  * Acts as registered player.
  */
 export interface Bot extends Player {

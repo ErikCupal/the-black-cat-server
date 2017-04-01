@@ -1,7 +1,7 @@
 import http from 'http'
 import Express from 'express'
 
-/** Creates basic HTTP(S) server */
+/** Creates basic HTTP server */
 const createServer = (): http.Server => {
   const app = Express()
   const server = http.createServer(app)

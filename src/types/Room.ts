@@ -11,6 +11,6 @@ export interface Room {
 
   /** Send socket message to all clients in the room */ 
   readonly send: (message: ServerMessage) => void
-  /** @returns the current game of the room or undefined if there is none */
+  /** Returns the current game of the room or undefined if there is none */
   readonly game: () => Game | undefined
 }

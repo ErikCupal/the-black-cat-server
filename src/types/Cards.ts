@@ -1,6 +1,6 @@
 export interface Card {
-  suit: Suit
-  rank: Rank
+  readonly suit: Suit
+  readonly rank: Rank
 }
 
 export type Suit =

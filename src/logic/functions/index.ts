@@ -1,8 +1,8 @@
 import { last } from 'lodash'
 import { Name } from '../../types/Name'
 import { PlayerScore } from '../../types/PlayerScore'
-import { Card, HandOver } from '../../types/Cards'
-import { first } from 'lodash'
+import { Card, Grills, HandOver } from '../../types/Cards'
+import { first, flatMap } from 'lodash'
 import { Game } from '../../types/Game'
 import ClientMessage, {
   DECK_DEALT,
@@ -133,6 +133,10 @@ export const createLatestScores = (scores: PlayerScore[]): { player: Name, point
       player: score.player,
       points: last(score.points),
     }))
+}
+
+export const getPlayersGrills = (players: Player[]): Grills => {
+  return flatMap(players, p => p.grills)
 }
 
 export const getBotResponse = async (
