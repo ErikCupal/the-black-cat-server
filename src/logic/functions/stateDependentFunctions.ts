@@ -158,6 +158,11 @@ export const createStateDependentFunctions = (getState: () => State) => {
     return playerCanRegister
   }
 
+  const isRealPlayerInRoom = (roomName: Name): boolean => {
+    const realPlayersInRoom = getPlayersInRoom(roomName).filter(p => !p.isBot)
+    return realPlayersInRoom.length > 1
+  }
+
   // creators
 
   const createRoom = (name: Name, player: Name): Room => {
@@ -308,6 +313,7 @@ export const createStateDependentFunctions = (getState: () => State) => {
     playerCanCreateRoom,
     playerCanJoinRoom,
     playerCanRegister,
+    isRealPlayerInRoom,
 
     // creators
     createRoom,

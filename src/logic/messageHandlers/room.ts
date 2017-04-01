@@ -1,7 +1,7 @@
-import { AVAILABLE_ROOMS, PLAYER_JOINED } from '../../types/Messages/ServerMessage'
+import { AVAILABLE_ROOMS, CHAT_MESSAGE, PLAYER_JOINED } from '../../types/Messages/ServerMessage'
 import { Bot } from '../../types/Player'
 import { STATE_ADD_BOT, STATE_SET_PLAYER_WANTS_NEW_GAME } from '../../types/Messages/StateMessage'
-import { ADD_BOT, I_WANT_NEW_GAME } from '../../types/Messages/ClientMessage'
+import { ADD_BOT, I_WANT_NEW_GAME, SEND_CHAT_MESSAGE } from '../../types/Messages/ClientMessage'
 import { MessageHandlersDI } from '../'
 import { LOGIC_GAME_START, LOGIC_PLAYER_JOINED_ROOM, LOGIC_ROOM_START } from '../../types/Messages/LogicMessage'
 import { Room } from '../../types/Room'
@@ -65,10 +65,17 @@ export const createRoomMessageHandlers = (di: MessageHandlersDI) => {
     }
   }
 
+  const onSendChatMessage = ({ player, text }: SEND_CHAT_MESSAGE) => {
+    if (text.length <= 3000) {
+      player.sendToAll({ type: CHAT_MESSAGE, text, player: player.name })
+    }
+  }
+
   return {
     onRoomStart,
     onPlayerWantsNewGame,
     onPlayerJoinedRoom,
     onAddBot,
+    onSendChatMessage,
   }
 }

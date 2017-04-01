@@ -29,7 +29,6 @@ import {
 } from '../types/Messages/LogicMessage'
 import { Bot, Player } from '../types/Player'
 import { createStateDependentFunctions, StateDependantFunctions } from './functions/stateDependentFunctions'
-import { createCommonMessageHandlers } from './messageHandlers/common'
 import { createConnectionMessageHandlers } from './messageHandlers/connection'
 import { createGameMessageHandlers } from './messageHandlers/game'
 import { createRoomMessageHandlers } from './messageHandlers/room'
@@ -70,7 +69,6 @@ export const configureMessageHandlers = (core: Core, log: typeof console.log, se
   // Create message handlers with injected dependencies
 
   const handlers = {
-    ...createCommonMessageHandlers(di),
     ...createConnectionMessageHandlers(di),
     ...createGameMessageHandlers(di),
     ...createRoomMessageHandlers(di),

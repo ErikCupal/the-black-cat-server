@@ -1,5 +1,13 @@
 import { MessageHandlersDI } from '../'
-import { CONNECT, CREATE_ROOM, DISCONNECT, JOIN_ROOM, LEAVE_ROOM, REGISTER } from '../../types/Messages/ClientMessage'
+import {
+  CONNECT,
+  CREATE_ROOM,
+  DISCONNECT,
+  GET_ROOMS,
+  JOIN_ROOM,
+  LEAVE_ROOM,
+  REGISTER
+} from '../../types/Messages/ClientMessage'
 import { LOGIC_PLAYER_JOINED_ROOM } from '../../types/Messages/LogicMessage'
 import {
   AVAILABLE_ROOMS,
@@ -25,6 +33,7 @@ import {
   STATE_SET_PLAYER_WAIT_FOR_ME,
   STATE_SET_PLAYER_WANTS_NEW_GAME
 } from '../../types/Messages/StateMessage'
+import { Name } from '../../types/Name'
 import { Bot, Player } from '../../types/Player'
 import { Room } from '../../types/Room'
 
@@ -42,6 +51,7 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
     findRoom,
     getPlayersInRoom,
     createBot,
+    isRealPlayerInRoom,
   } = di
 
   const sendAllPlayersRoomsList = () => {
@@ -49,6 +59,37 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
     getAllPlayers().forEach(player => {
       player.send({ type: AVAILABLE_ROOMS, rooms })
     })
+  }
+
+  const replacePlayerWithBot = (player: Player, room: Room) => {
+    const bot: Bot = createBot(player as Player)
+    dispatch({ type: STATE_REPLACE_PLAYER_WITH_BOT, player: player.name as string, bot })
+
+    room.send({ type: PLAYER_REPLACED_WITH_BOT, player: player.name as string, bot: bot.name })
+
+    bot.hookIntoGame()
+  }
+
+  const resetPlayerCardsAndFlags = (playerName: string) => {
+    dispatch({ type: STATE_REMOVE_PLAYER_CARDS, player: playerName })
+    dispatch({ type: STATE_SET_PLAYER_PASSED_HANDOVER, player: playerName, value: false })
+    dispatch({ type: STATE_SET_PLAYER_SHOULD_PASS_HANDOVER, player: playerName, value: false })
+    dispatch({ type: STATE_SET_PLAYER_WANTS_NEW_GAME, player: playerName, value: true })
+    dispatch({ type: STATE_SET_PLAYER_WAIT_FOR_ME, player: playerName, value: false })
+  }
+
+  const removeRoom = (roomName: Name) => {
+    const botsInRoom = getPlayersInRoom(roomName)
+      .filter(p => p.isBot)
+    botsInRoom.forEach(player => {
+      dispatch({ type: STATE_REMOVE_PLAYER, id: player.id })
+    })
+    dispatch({ type: STATE_REMOVE_GAME, room: roomName })
+    dispatch({ type: STATE_REMOVE_ROOM, room: roomName })
+
+    log(`❌🎮 Room ${roomName} removed.`)
+
+    sendAllPlayersRoomsList()
   }
 
   const onConnect = ({ player }: CONNECT) => {
@@ -60,32 +101,14 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
 
     const room = player.room()
     if (room) {
-      // Player is in room
-      const realPlayersInRoom = getPlayersInRoom(room.name).filter(p => !p.isBot)
-      if (realPlayersInRoom.length > 1) {
-        // Replace player with bot
-        const bot: Bot = createBot(player as Player)
-        dispatch({ type: STATE_REPLACE_PLAYER_WITH_BOT, player: player.name as string, bot })
-        dispatch({ type: STATE_REMOVE_PLAYER, id: player.id })
-        room.send({ type: PLAYER_REPLACED_WITH_BOT, player: player.name as string, bot: bot.name })
-
-        bot.hookIntoGame()
+      if (isRealPlayerInRoom(room.name)) {
+        replacePlayerWithBot(player as Player, room)
       } else {
-        // After the player leaves this room, there would be only bots
-        // Therefore it is necessary to remove the room and all its bots
-        getPlayersInRoom(room.name).forEach(player => {
-          dispatch({ type: STATE_REMOVE_PLAYER, id: player.id })
-        })
-        dispatch({ type: STATE_REMOVE_GAME, room: room.name })
-        dispatch({ type: STATE_REMOVE_ROOM, room: room.name })
-
-        log(`❌🎮 Room ${room.name} removed.`)
-
-        sendAllPlayersRoomsList()
+        removeRoom(room.name)
       }
-    } else {
-      dispatch({ type: STATE_REMOVE_PLAYER, id: player.id })
     }
+
+    dispatch({ type: STATE_REMOVE_PLAYER, id: player.id })
   }
 
   const onRegister = ({ player, name }: REGISTER) => {
@@ -132,34 +155,19 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
   const onLeaveRoom = ({ player }: LEAVE_ROOM) => {
     const room = player.room()
     if (room) {
-      const realPlayersInRoom = getPlayersInRoom(room.name).filter(p => !p.isBot)
-      if (realPlayersInRoom.length > 1) {
-        const bot: Bot = createBot(player)
-        dispatch({ type: STATE_REPLACE_PLAYER_WITH_BOT, player: player.name as string, bot })
-
-        room.send({ type: PLAYER_REPLACED_WITH_BOT, player: player.name as string, bot: bot.name })
-
-        bot.hookIntoGame()
+      if (isRealPlayerInRoom(room.name)) {
+        replacePlayerWithBot(player as Player, room)
       } else {
-        getPlayersInRoom(room.name)
-          .filter(({ name }) => name !== player.name)
-          .forEach(player => {
-            dispatch({ type: STATE_REMOVE_PLAYER, id: player.id })
-          })
-        dispatch({ type: STATE_REMOVE_GAME, room: room.name })
-        dispatch({ type: STATE_REMOVE_ROOM, room: room.name })
-
-        log(`❌🎮 Room ${room.name} removed.`)
-
-        sendAllPlayersRoomsList()
+        removeRoom(room.name)
       }
 
-      dispatch({ type: STATE_REMOVE_PLAYER_CARDS, player: player.name })
-      dispatch({ type: STATE_SET_PLAYER_PASSED_HANDOVER, player: player.name, value: false })
-      dispatch({ type: STATE_SET_PLAYER_SHOULD_PASS_HANDOVER, player: player.name, value: false })
-      dispatch({ type: STATE_SET_PLAYER_WANTS_NEW_GAME, player: player.name, value: true })
-      dispatch({ type: STATE_SET_PLAYER_WAIT_FOR_ME, player: player.name, value: false })
+      resetPlayerCardsAndFlags(player.name)
     }
+  }
+
+  const onGetRooms = ({ player }: GET_ROOMS) => {
+    const rooms = getRoomNamesAndAvailability()
+    player.send({ type: AVAILABLE_ROOMS, rooms })
   }
 
   return {
@@ -169,5 +177,6 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
     onCreateRoom,
     onJoinRoom,
     onLeaveRoom,
+    onGetRooms,
   }
 }
