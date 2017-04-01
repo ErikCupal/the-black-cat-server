@@ -2,65 +2,64 @@ import { flatMap } from 'lodash'
 import { Card, Deck } from '../../src/types/Cards'
 
 export interface SuitOfCards {
-  Seven: Card
-  Eight: Card
-  Nine: Card
-  Ten: Card
-  Jack: Card
-  Queen: Card
-  King: Card
-  Ace: Card
+  SEVEN: Card
+  EIGHT: Card
+  NINE: Card
+  TEN: Card
+  JACK: Card
+  QUEEN: Card
+  KING: Card
+  ACE: Card
 }
 
 export interface Cards {
-  Spades: SuitOfCards
-  Hearts: SuitOfCards
-  Diamonds: SuitOfCards
-  Clubs: SuitOfCards
+  SPADES: SuitOfCards
+  HEARTS: SuitOfCards
+  DIAMONDS: SuitOfCards
+  CLUBS: SuitOfCards
 }
 
-export const Cards: Cards = {
-  Spades: {
-    Seven: { suit: 'Spades', rank: 'Seven' },
-    Eight: { suit: 'Spades', rank: 'Eight' },
-    Nine: { suit: 'Spades', rank: 'Nine' },
-    Ten: { suit: 'Spades', rank: 'Ten' },
-    Jack: { suit: 'Spades', rank: 'Jack' },
-    Queen: { suit: 'Spades', rank: 'Queen' },
-    King: { suit: 'Spades', rank: 'King' },
-    Ace: { suit: 'Spades', rank: 'Ace' },
+export const CARDS: Cards = {
+  SPADES: {
+    SEVEN: { suit: 'Spades', rank: 'Seven' },
+    EIGHT: { suit: 'Spades', rank: 'Eight' },
+    NINE: { suit: 'Spades', rank: 'Nine' },
+    TEN: { suit: 'Spades', rank: 'Ten' },
+    JACK: { suit: 'Spades', rank: 'Jack' },
+    QUEEN: { suit: 'Spades', rank: 'Queen' },
+    KING: { suit: 'Spades', rank: 'King' },
+    ACE: { suit: 'Spades', rank: 'Ace' },
   },
-  Hearts: {
-    Seven: { suit: 'Hearts', rank: 'Seven' },
-    Eight: { suit: 'Hearts', rank: 'Eight' },
-    Nine: { suit: 'Hearts', rank: 'Nine' },
-    Ten: { suit: 'Hearts', rank: 'Ten' },
-    Jack: { suit: 'Hearts', rank: 'Jack' },
-    Queen: { suit: 'Hearts', rank: 'Queen' },
-    King: { suit: 'Hearts', rank: 'King' },
-    Ace: { suit: 'Hearts', rank: 'Ace' },
+  HEARTS: {
+    SEVEN: { suit: 'Hearts', rank: 'Seven' },
+    EIGHT: { suit: 'Hearts', rank: 'Eight' },
+    NINE: { suit: 'Hearts', rank: 'Nine' },
+    TEN: { suit: 'Hearts', rank: 'Ten' },
+    JACK: { suit: 'Hearts', rank: 'Jack' },
+    QUEEN: { suit: 'Hearts', rank: 'Queen' },
+    KING: { suit: 'Hearts', rank: 'King' },
+    ACE: { suit: 'Hearts', rank: 'Ace' },
   },
-  Diamonds: {
-    Seven: { suit: 'Diamonds', rank: 'Seven' },
-    Eight: { suit: 'Diamonds', rank: 'Eight' },
-    Nine: { suit: 'Diamonds', rank: 'Nine' },
-    Ten: { suit: 'Diamonds', rank: 'Ten' },
-    Jack: { suit: 'Diamonds', rank: 'Jack' },
-    Queen: { suit: 'Diamonds', rank: 'Queen' },
-    King: { suit: 'Diamonds', rank: 'King' },
-    Ace: { suit: 'Diamonds', rank: 'Ace' },
+  DIAMONDS: {
+    SEVEN: { suit: 'Diamonds', rank: 'Seven' },
+    EIGHT: { suit: 'Diamonds', rank: 'Eight' },
+    NINE: { suit: 'Diamonds', rank: 'Nine' },
+    TEN: { suit: 'Diamonds', rank: 'Ten' },
+    JACK: { suit: 'Diamonds', rank: 'Jack' },
+    QUEEN: { suit: 'Diamonds', rank: 'Queen' },
+    KING: { suit: 'Diamonds', rank: 'King' },
+    ACE: { suit: 'Diamonds', rank: 'Ace' },
   },
-  Clubs: {
-    Seven: { suit: 'Clubs', rank: 'Seven' },
-    Eight: { suit: 'Clubs', rank: 'Eight' },
-    Nine: { suit: 'Clubs', rank: 'Nine' },
-    Ten: { suit: 'Clubs', rank: 'Ten' },
-    Jack: { suit: 'Clubs', rank: 'Jack' },
-    Queen: { suit: 'Clubs', rank: 'Queen' },
-    King: { suit: 'Clubs', rank: 'King' },
-    Ace: { suit: 'Clubs', rank: 'Ace' },
+  CLUBS: {
+    SEVEN: { suit: 'Clubs', rank: 'Seven' },
+    EIGHT: { suit: 'Clubs', rank: 'Eight' },
+    NINE: { suit: 'Clubs', rank: 'Nine' },
+    TEN: { suit: 'Clubs', rank: 'Ten' },
+    JACK: { suit: 'Clubs', rank: 'Jack' },
+    QUEEN: { suit: 'Clubs', rank: 'Queen' },
+    KING: { suit: 'Clubs', rank: 'King' },
+    ACE: { suit: 'Clubs', rank: 'Ace' },
   },
 }
 
-export const TheBlackCat = Cards.Spades.Queen
-export const FullDeck: Deck =  flatMap(Object.values(Cards), suit => Object.values(suit))
+export const DECK: Deck =  flatMap(Object.values(CARDS), suit => Object.values(suit))

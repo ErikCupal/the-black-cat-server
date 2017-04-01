@@ -1,3 +1,4 @@
+import { THE_BLACK_CAT_CARD } from '../../src/logic/constants'
 import { normalizePlayerIndex } from '../../src/logic/functions'
 import {
   bestCardToPlay,
@@ -19,27 +20,27 @@ import {
   sortCardsByLowestValue
 } from '../../src/logic/functions/cards'
 import { Card, Deck, Grills, Hand, Rank, Suit, Table } from '../../src/types/Cards'
-import { Cards, FullDeck, TheBlackCat } from '../constants'
+import { CARDS, DECK } from '../constants'
 
 describe('validators', () => {
   test('cardEqual', () => {
-    expect(cardEqual(Cards.Diamonds.King)({ suit: 'Diamonds', rank: 'King' })).toBeTruthy()
-    expect(cardEqual(Cards.Diamonds.King)({ suit: 'Diamonds', rank: 'Queen' })).toBeFalsy()
-    expect(cardEqual(Cards.Diamonds.King)({ suit: 'Hearts', rank: 'King' })).toBeFalsy()
+    expect(cardEqual(CARDS.DIAMONDS.KING)({ suit: 'Diamonds', rank: 'King' })).toBeTruthy()
+    expect(cardEqual(CARDS.DIAMONDS.KING)({ suit: 'Diamonds', rank: 'Queen' })).toBeFalsy()
+    expect(cardEqual(CARDS.DIAMONDS.KING)({ suit: 'Hearts', rank: 'King' })).toBeFalsy()
   })
 
   test('cardNotEqual', () => {
-    expect(cardNotEqual(Cards.Diamonds.King)({ suit: 'Diamonds', rank: 'King' })).toBeFalsy()
-    expect(cardNotEqual(Cards.Diamonds.King)({ suit: 'Diamonds', rank: 'Queen' })).toBeTruthy()
-    expect(cardNotEqual(Cards.Diamonds.King)({ suit: 'Hearts', rank: 'King' })).toBeTruthy()
+    expect(cardNotEqual(CARDS.DIAMONDS.KING)({ suit: 'Diamonds', rank: 'King' })).toBeFalsy()
+    expect(cardNotEqual(CARDS.DIAMONDS.KING)({ suit: 'Diamonds', rank: 'Queen' })).toBeTruthy()
+    expect(cardNotEqual(CARDS.DIAMONDS.KING)({ suit: 'Hearts', rank: 'King' })).toBeTruthy()
   })
 
   test('cardIsIn', () => {
-    expect(cardIsIn(FullDeck)({ suit: 'Diamonds', rank: 'King' })).toBeTruthy()
+    expect(cardIsIn(DECK)({ suit: 'Diamonds', rank: 'King' })).toBeTruthy()
   })
 
   test('cardIsNotIn', () => {
-    expect(cardIsNotIn(FullDeck)({ suit: 'Diamonds', rank: 'King' })).toBeFalsy()
+    expect(cardIsNotIn(DECK)({ suit: 'Diamonds', rank: 'King' })).toBeFalsy()
   })
 
   test('cardIsOfSuit', () => {
@@ -88,39 +89,39 @@ test('getSuitAsNumber', () => {
 
 describe('comparing cards', () => {
   test('compareByRank', () => {
-    expect(compareByRank(Cards.Diamonds.Eight, Cards.Diamonds.Seven)).toBe(1)
-    expect(compareByRank(Cards.Diamonds.Eight, Cards.Diamonds.Eight)).toBe(0)
-    expect(compareByRank(Cards.Diamonds.Eight, Cards.Diamonds.Jack)).toBe(-1)
+    expect(compareByRank(CARDS.DIAMONDS.EIGHT, CARDS.DIAMONDS.SEVEN)).toBe(1)
+    expect(compareByRank(CARDS.DIAMONDS.EIGHT, CARDS.DIAMONDS.EIGHT)).toBe(0)
+    expect(compareByRank(CARDS.DIAMONDS.EIGHT, CARDS.DIAMONDS.JACK)).toBe(-1)
   })
 
   test('compareBySuit', () => {
-    expect(compareBySuit(Cards.Diamonds.Eight, Cards.Clubs.Seven)).toBe(1)
-    expect(compareBySuit(Cards.Diamonds.Eight, Cards.Diamonds.Seven)).toBe(0)
-    expect(compareBySuit(Cards.Diamonds.Eight, Cards.Hearts.Seven)).toBe(-1)
+    expect(compareBySuit(CARDS.DIAMONDS.EIGHT, CARDS.CLUBS.SEVEN)).toBe(1)
+    expect(compareBySuit(CARDS.DIAMONDS.EIGHT, CARDS.DIAMONDS.SEVEN)).toBe(0)
+    expect(compareBySuit(CARDS.DIAMONDS.EIGHT, CARDS.HEARTS.SEVEN)).toBe(-1)
   })
 })
 
 describe('sorting cards', () => {
   const cards = [
-    Cards.Hearts.Jack,
-    Cards.Diamonds.Eight,
-    Cards.Spades.Queen,
-    Cards.Diamonds.Ten,
-    Cards.Hearts.Ace,
-    Cards.Clubs.Ace,
-    Cards.Clubs.Queen,
-    Cards.Diamonds.King,
+    CARDS.HEARTS.JACK,
+    CARDS.DIAMONDS.EIGHT,
+    CARDS.SPADES.QUEEN,
+    CARDS.DIAMONDS.TEN,
+    CARDS.HEARTS.ACE,
+    CARDS.CLUBS.ACE,
+    CARDS.CLUBS.QUEEN,
+    CARDS.DIAMONDS.KING,
   ]
 
   const sortedByGreatestValue = [
-    Cards.Hearts.Ace,
-    Cards.Clubs.Ace,
-    Cards.Diamonds.King,
-    Cards.Spades.Queen,
-    Cards.Clubs.Queen,
-    Cards.Hearts.Jack,
-    Cards.Diamonds.Ten,
-    Cards.Diamonds.Eight,
+    CARDS.HEARTS.ACE,
+    CARDS.CLUBS.ACE,
+    CARDS.DIAMONDS.KING,
+    CARDS.SPADES.QUEEN,
+    CARDS.CLUBS.QUEEN,
+    CARDS.HEARTS.JACK,
+    CARDS.DIAMONDS.TEN,
+    CARDS.DIAMONDS.EIGHT,
   ]
   const sortedByLowestValue = [...sortedByGreatestValue].reverse()
 
@@ -146,9 +147,9 @@ describe('getCardPoints', () => {
   }
 
   test('works for no points cards', () => {
-    const noPointCards = FullDeck.filter(card => {
+    const noPointCards = DECK.filter(card => {
       return card.suit !== 'Hearts'
-        && (cardNotEqual(card)(TheBlackCat))
+        && (cardNotEqual(card)(THE_BLACK_CAT_CARD))
     })
 
     noPointCards.forEach(card => {
@@ -173,36 +174,36 @@ describe('getCardPoints', () => {
     ]
 
     getPointWithHeartsNotGrilled.forEach(getPointsFunction => {
-      expect(getPointsFunction(Cards.Hearts.Seven)).toBe(1)
-      expect(getPointsFunction(Cards.Hearts.Eight)).toBe(1)
-      expect(getPointsFunction(Cards.Hearts.Nine)).toBe(1)
-      expect(getPointsFunction(Cards.Hearts.Ten)).toBe(1)
-      expect(getPointsFunction(Cards.Hearts.Jack)).toBe(2)
-      expect(getPointsFunction(Cards.Hearts.Queen)).toBe(3)
-      expect(getPointsFunction(Cards.Hearts.King)).toBe(4)
-      expect(getPointsFunction(Cards.Hearts.Ace)).toBe(5)
+      expect(getPointsFunction(CARDS.HEARTS.SEVEN)).toBe(1)
+      expect(getPointsFunction(CARDS.HEARTS.EIGHT)).toBe(1)
+      expect(getPointsFunction(CARDS.HEARTS.NINE)).toBe(1)
+      expect(getPointsFunction(CARDS.HEARTS.TEN)).toBe(1)
+      expect(getPointsFunction(CARDS.HEARTS.JACK)).toBe(2)
+      expect(getPointsFunction(CARDS.HEARTS.QUEEN)).toBe(3)
+      expect(getPointsFunction(CARDS.HEARTS.KING)).toBe(4)
+      expect(getPointsFunction(CARDS.HEARTS.ACE)).toBe(5)
     })
 
     getPointWithHeartsGrilled.forEach(getPointsFunction => {
-      expect(getPointsFunction(Cards.Hearts.Seven)).toBe(1 * 2)
-      expect(getPointsFunction(Cards.Hearts.Eight)).toBe(1 * 2)
-      expect(getPointsFunction(Cards.Hearts.Nine)).toBe(1 * 2)
-      expect(getPointsFunction(Cards.Hearts.Ten)).toBe(1 * 2)
-      expect(getPointsFunction(Cards.Hearts.Jack)).toBe(2 * 2)
-      expect(getPointsFunction(Cards.Hearts.Queen)).toBe(3 * 2)
-      expect(getPointsFunction(Cards.Hearts.King)).toBe(4 * 2)
-      expect(getPointsFunction(Cards.Hearts.Ace)).toBe(5 * 2)
+      expect(getPointsFunction(CARDS.HEARTS.SEVEN)).toBe(1 * 2)
+      expect(getPointsFunction(CARDS.HEARTS.EIGHT)).toBe(1 * 2)
+      expect(getPointsFunction(CARDS.HEARTS.NINE)).toBe(1 * 2)
+      expect(getPointsFunction(CARDS.HEARTS.TEN)).toBe(1 * 2)
+      expect(getPointsFunction(CARDS.HEARTS.JACK)).toBe(2 * 2)
+      expect(getPointsFunction(CARDS.HEARTS.QUEEN)).toBe(3 * 2)
+      expect(getPointsFunction(CARDS.HEARTS.KING)).toBe(4 * 2)
+      expect(getPointsFunction(CARDS.HEARTS.ACE)).toBe(5 * 2)
     })
 
     getPointWithHeartsTwiceGrilled.forEach(getPointsFunction => {
-      expect(getPointsFunction(Cards.Hearts.Seven)).toBe(1 * 3)
-      expect(getPointsFunction(Cards.Hearts.Eight)).toBe(1 * 3)
-      expect(getPointsFunction(Cards.Hearts.Nine)).toBe(1 * 3)
-      expect(getPointsFunction(Cards.Hearts.Ten)).toBe(1 * 3)
-      expect(getPointsFunction(Cards.Hearts.Jack)).toBe(2 * 3)
-      expect(getPointsFunction(Cards.Hearts.Queen)).toBe(3 * 3)
-      expect(getPointsFunction(Cards.Hearts.King)).toBe(4 * 3)
-      expect(getPointsFunction(Cards.Hearts.Ace)).toBe(5 * 3)
+      expect(getPointsFunction(CARDS.HEARTS.SEVEN)).toBe(1 * 3)
+      expect(getPointsFunction(CARDS.HEARTS.EIGHT)).toBe(1 * 3)
+      expect(getPointsFunction(CARDS.HEARTS.NINE)).toBe(1 * 3)
+      expect(getPointsFunction(CARDS.HEARTS.TEN)).toBe(1 * 3)
+      expect(getPointsFunction(CARDS.HEARTS.JACK)).toBe(2 * 3)
+      expect(getPointsFunction(CARDS.HEARTS.QUEEN)).toBe(3 * 3)
+      expect(getPointsFunction(CARDS.HEARTS.KING)).toBe(4 * 3)
+      expect(getPointsFunction(CARDS.HEARTS.ACE)).toBe(5 * 3)
     })
   })
 
@@ -221,11 +222,11 @@ describe('getCardPoints', () => {
     ]
 
     getPointWithCatNotGrilled.forEach(getPointsFunction => {
-      expect(getPointsFunction(TheBlackCat)).toBe(11)
+      expect(getPointsFunction(THE_BLACK_CAT_CARD)).toBe(11)
     })
 
     getPointWithCatGrilled.forEach(getPointsFunction => {
-      expect(getPointsFunction(TheBlackCat)).toBe(22)
+      expect(getPointsFunction(THE_BLACK_CAT_CARD)).toBe(22)
     })
   })
 
@@ -233,24 +234,24 @@ describe('getCardPoints', () => {
 
 test('getPenaltyPoints works for full deck', () => {
   const heartsOne = [
-    Cards.Hearts.Seven,
-    Cards.Hearts.Eight,
-    Cards.Hearts.Nine,
+    CARDS.HEARTS.SEVEN,
+    CARDS.HEARTS.EIGHT,
+    CARDS.HEARTS.NINE,
   ]
   const heartsTwo = [
-    Cards.Hearts.Jack,
-    Cards.Hearts.Queen,
-    Cards.Hearts.King,
+    CARDS.HEARTS.JACK,
+    CARDS.HEARTS.QUEEN,
+    CARDS.HEARTS.KING,
   ]
 
   const emptyGrill: Grills = []
   const heartsGrilled = heartsOne
   const heartsDoubleGrilled = [...heartsOne, ...heartsTwo]
-  const blackCatGrilled = [TheBlackCat]
-  const blackCatAndHeartsGrilled = [TheBlackCat, ...heartsOne]
-  const blackCatAndHeartsDoubleGrilled = [TheBlackCat, ...heartsOne, ...heartsTwo]
+  const blackCatGrilled = [THE_BLACK_CAT_CARD]
+  const blackCatAndHeartsGrilled = [THE_BLACK_CAT_CARD, ...heartsOne]
+  const blackCatAndHeartsDoubleGrilled = [THE_BLACK_CAT_CARD, ...heartsOne, ...heartsTwo]
 
-  const fullPile = FullDeck
+  const fullPile = DECK
 
   const getFullPilePoints = (grills: Grills) => getPenaltyPoints(grills)(fullPile)
 
@@ -263,15 +264,15 @@ test('getPenaltyPoints works for full deck', () => {
 })
 
 test('createDeck', () => {
-  expect(createDeck()).toEqual(FullDeck)
+  expect(createDeck()).toEqual(DECK)
 })
 
 test('getPlayerHand', () => {
-  const deck = FullDeck
-  const hand1: Hand = Object.values(Cards.Spades)
-  const hand2: Hand = Object.values(Cards.Hearts)
-  const hand3: Hand = Object.values(Cards.Diamonds)
-  const hand4: Hand = Object.values(Cards.Clubs)
+  const deck = DECK
+  const hand1: Hand = Object.values(CARDS.SPADES)
+  const hand2: Hand = Object.values(CARDS.HEARTS)
+  const hand3: Hand = Object.values(CARDS.DIAMONDS)
+  const hand4: Hand = Object.values(CARDS.CLUBS)
 
   expect(getPlayerHand(deck, 0)).toEqual(hand1)
   expect(getPlayerHand(deck, 1)).toEqual(hand2)
@@ -281,73 +282,73 @@ test('getPlayerHand', () => {
 
 test('getHighestCardOnTable', () => {
   const table1: Table = [
-    Cards.Clubs.Ten,
-    Cards.Clubs.Jack,
-    Cards.Clubs.Nine,
-    Cards.Clubs.Ace,
+    CARDS.CLUBS.TEN,
+    CARDS.CLUBS.JACK,
+    CARDS.CLUBS.NINE,
+    CARDS.CLUBS.ACE,
   ]
-  expect(getHighestCardOnTable(table1)).toBe(Cards.Clubs.Ace)
+  expect(getHighestCardOnTable(table1)).toBe(CARDS.CLUBS.ACE)
 })
 
 test('bestCardToPlay returns correct card', () => {
   const hand1 = [
-    Cards.Clubs.Seven,
-    Cards.Spades.Eight,
-    Cards.Hearts.Jack,
-    Cards.Spades.Queen,
+    CARDS.CLUBS.SEVEN,
+    CARDS.SPADES.EIGHT,
+    CARDS.HEARTS.JACK,
+    CARDS.SPADES.QUEEN,
   ]
 
   const hand2 = [
-    Cards.Clubs.Seven,
-    Cards.Diamonds.Ace,
-    Cards.Hearts.Jack,
-    Cards.Hearts.King,
+    CARDS.CLUBS.SEVEN,
+    CARDS.DIAMONDS.ACE,
+    CARDS.HEARTS.JACK,
+    CARDS.HEARTS.KING,
   ]
 
   const hand3 = [
-    Cards.Spades.Ace,
-    Cards.Diamonds.Ace,
-    Cards.Spades.Queen,
-    Cards.Hearts.King,
+    CARDS.SPADES.ACE,
+    CARDS.DIAMONDS.ACE,
+    CARDS.SPADES.QUEEN,
+    CARDS.HEARTS.KING,
   ]
 
-  const hand4 = [TheBlackCat]
+  const hand4 = [THE_BLACK_CAT_CARD]
 
   const grill1 = [
-    Cards.Hearts.Seven,
-    Cards.Hearts.Ten,
-    Cards.Hearts.Nine,
+    CARDS.HEARTS.SEVEN,
+    CARDS.HEARTS.TEN,
+    CARDS.HEARTS.NINE,
   ]
 
   const table1 = [
-    Cards.Spades.Nine,
-    Cards.Hearts.King,
-    Cards.Spades.Eight,
+    CARDS.SPADES.NINE,
+    CARDS.HEARTS.KING,
+    CARDS.SPADES.EIGHT,
   ]
 
   const table2 = [
-    Cards.Clubs.Nine,
-    Cards.Hearts.King,
-    Cards.Spades.Eight,
+    CARDS.CLUBS.NINE,
+    CARDS.HEARTS.KING,
+    CARDS.SPADES.EIGHT,
   ]
 
   const emptyTable: Table = []
 
-  expect(bestCardToPlay(hand1, [], table1)).toEqual(Cards.Spades.Eight)
-  expect(bestCardToPlay(hand2, [], table1)).toEqual(Cards.Diamonds.Ace)
-  expect(bestCardToPlay(hand3, [], table2)).toEqual(Cards.Spades.Queen)
-  expect(bestCardToPlay(hand4, [], table2)).toEqual(Cards.Spades.Queen)
-  expect(bestCardToPlay(hand1, [], emptyTable)).toEqual(Cards.Clubs.Seven)
-  expect(bestCardToPlay(hand2, [], emptyTable)).toEqual(Cards.Clubs.Seven)
-  expect(bestCardToPlay(hand3, [], emptyTable)).toEqual(Cards.Hearts.King)
-  expect(bestCardToPlay(hand4, [], emptyTable)).toEqual(Cards.Spades.Queen)
+  expect(bestCardToPlay(hand1, [], table1)).toEqual(CARDS.SPADES.EIGHT)
+  expect(bestCardToPlay(hand2, [], table1)).toEqual(CARDS.DIAMONDS.ACE)
+  expect(bestCardToPlay(hand3, [], table2)).toEqual(CARDS.SPADES.QUEEN)
+  expect(bestCardToPlay(hand4, [], table2)).toEqual(CARDS.SPADES.QUEEN)
+  expect(bestCardToPlay(hand1, [], emptyTable)).toEqual(CARDS.CLUBS.SEVEN)
+  expect(bestCardToPlay(hand2, [], emptyTable)).toEqual(CARDS.CLUBS.SEVEN)
+  expect(bestCardToPlay(hand3, [], emptyTable)).toEqual(CARDS.HEARTS.KING)
+  expect(bestCardToPlay(hand4, [], emptyTable)).toEqual(CARDS.SPADES.QUEEN)
 
-  expect(bestCardToPlay(hand1, grill1, table1)).toEqual(Cards.Spades.Eight)
-  expect(bestCardToPlay(hand2, grill1, table1)).toEqual(Cards.Diamonds.Ace)
-  expect(bestCardToPlay(hand3, grill1, table2)).toEqual(Cards.Spades.Queen)
-  expect(bestCardToPlay(hand4, grill1, table2)).toEqual(Cards.Spades.Queen)
-  expect(bestCardToPlay(hand1, grill1, emptyTable)).toEqual(Cards.Clubs.Seven)
-  expect(bestCardToPlay(hand2, grill1, emptyTable)).toEqual(Cards.Clubs.Seven)
-  expect(bestCardToPlay(hand3, grill1, emptyTable)).toEqual(Cards.Hearts.Seven)
-  expect(bestCardToPlay(hand4, grill1, emptyTable)).toEqual(Cards.Hearts.Seven)
+  expect(bestCardToPlay(hand1, grill1, table1)).toEqual(CARDS.SPADES.EIGHT)
+  expect(bestCardToPlay(hand2, grill1, table1)).toEqual(CARDS.DIAMONDS.ACE)
+  expect(bestCardToPlay(hand3, grill1, table2)).toEqual(CARDS.SPADES.QUEEN)
+  expect(bestCardToPlay(hand4, grill1, table2)).toEqual(CARDS.SPADES.QUEEN)
+  expect(bestCardToPlay(hand1, grill1, emptyTable)).toEqual(CARDS.CLUBS.SEVEN)
+  expect(bestCardToPlay(hand2, grill1, emptyTable)).toEqual(CARDS.CLUBS.SEVEN)
+  expect(bestCardToPlay(hand3, grill1, emptyTable)).toEqual(CARDS.HEARTS.SEVEN)
+  expect(bestCardToPlay(hand4, grill1, emptyTable)).toEqual(CARDS.HEARTS.SEVEN)
 })

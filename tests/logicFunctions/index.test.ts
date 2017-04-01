@@ -1,5 +1,6 @@
+import { THE_BLACK_CAT_CARD } from '../../src/logic/constants'
 import { Game } from '../../src/types/Game'
-import { Cards, TheBlackCat } from '../constants'
+import { CARDS } from '../constants'
 import { Card, Hand, Table } from '../../src/types/Cards'
 import { Player } from '../../src/types/Player'
 import {
@@ -15,7 +16,9 @@ import {
   tableIsFull
 } from '../../src/logic/functions'
 
+// tslint:disable-next-line:no-any
 const returnUndefined = (...args: any[]) => undefined
+// tslint:disable-next-line:no-any
 const throwNotNeeded = (...args: any[]): never => { throw 'the function does not need this' }
 
 const playerTemplate: Player = {
@@ -35,20 +38,20 @@ const playerTemplate: Player = {
 }
 
 const handTemplate: Hand = [
-  TheBlackCat,
-  Cards.Clubs.King,
-  Cards.Diamonds.Queen,
-  Cards.Hearts.Ace,
-  Cards.Hearts.King,
-  Cards.Hearts.Seven,
-  Cards.Spades.Jack,
-  Cards.Clubs.Nine,
+  THE_BLACK_CAT_CARD,
+  CARDS.CLUBS.KING,
+  CARDS.DIAMONDS.QUEEN,
+  CARDS.HEARTS.ACE,
+  CARDS.HEARTS.KING,
+  CARDS.HEARTS.SEVEN,
+  CARDS.SPADES.JACK,
+  CARDS.CLUBS.NINE,
 ]
 
 const handOverTemplate = [
-  Cards.Diamonds.Queen,
-  Cards.Hearts.Ace,
-  Cards.Spades.Ace,
+  CARDS.DIAMONDS.QUEEN,
+  CARDS.HEARTS.ACE,
+  CARDS.SPADES.ACE,
 ]
 
 const gameTemplate: Game = {
@@ -60,10 +63,10 @@ const gameTemplate: Game = {
 }
 
 const tableTemplate: Table = [
-  Cards.Diamonds.Jack,
-  Cards.Hearts.Eight,
-  Cards.Diamonds.Nine,
-  Cards.Diamonds.Ace,
+  CARDS.DIAMONDS.JACK,
+  CARDS.HEARTS.EIGHT,
+  CARDS.DIAMONDS.NINE,
+  CARDS.DIAMONDS.ACE,
 ]
 
 test('normalizePlayerIndex works for values 0 - 8', () => {
@@ -85,10 +88,10 @@ describe('validators work', () => {
       hand: handTemplate,
     }
 
-    const handOver1 = [Cards.Diamonds.Queen, Cards.Hearts.Ace]
-    const handOver2 = [...handOver1, Cards.Hearts.King]
-    const handOver3 = [...handOver2, Cards.Spades.Jack]
-    const handOver4 = [...handOver1, Cards.Clubs.Ace]
+    const handOver1 = [CARDS.DIAMONDS.QUEEN, CARDS.HEARTS.ACE]
+    const handOver2 = [...handOver1, CARDS.HEARTS.KING]
+    const handOver3 = [...handOver2, CARDS.SPADES.JACK]
+    const handOver4 = [...handOver1, CARDS.CLUBS.ACE]
 
     const parameters = [
       { handOver: handOver1, result: false },
@@ -115,10 +118,10 @@ describe('validators work', () => {
       game: () => gameTemplate,
     }
 
-    const grill1 = [Cards.Hearts.Seven, Cards.Hearts.Ace]
-    const grill2 = [...grill1, Cards.Hearts.King]
-    const grill3 = [...grill2, Cards.Hearts.Jack]
-    const grill4 = [TheBlackCat]
+    const grill1 = [CARDS.HEARTS.SEVEN, CARDS.HEARTS.ACE]
+    const grill2 = [...grill1, CARDS.HEARTS.KING]
+    const grill3 = [...grill2, CARDS.HEARTS.JACK]
+    const grill4 = [THE_BLACK_CAT_CARD]
 
     const parameters = [
       { grill: grill1, result: false },
@@ -141,7 +144,7 @@ describe('validators work', () => {
   test('playerCanHaveDealtDeck', () => {
     const player1: Player = playerTemplate
     const player2: Player = { ...playerTemplate, waitForMe: true }
-    const player3: Player = { ...player2, hand: [Cards.Clubs.Ace] }
+    const player3: Player = { ...player2, hand: [CARDS.CLUBS.ACE] }
     const player4: Player = { ...player3, hand: handTemplate }
     const player5: Player = { ...player4, game: () => gameTemplate }
 
@@ -172,17 +175,17 @@ describe('validators work', () => {
     const player2: Player = {
       ...playerTemplate,
       hand: [
-        Cards.Clubs.Eight,
-        Cards.Diamonds.Eight,
-        Cards.Hearts.Ace,
-        Cards.Spades.Ten,
-        Cards.Clubs.Nine,
+        CARDS.CLUBS.EIGHT,
+        CARDS.DIAMONDS.EIGHT,
+        CARDS.HEARTS.ACE,
+        CARDS.SPADES.TEN,
+        CARDS.CLUBS.NINE,
       ]
     }
     const player3: Player = {
       ...playerTemplate,
       hand: [
-        Cards.Clubs.Eight,
+        CARDS.CLUBS.EIGHT,
       ]
     }
 
@@ -197,11 +200,11 @@ describe('validators work', () => {
       ...playerTemplate,
       handOver: handOverTemplate,
       hand: [
-        Cards.Clubs.Eight,
-        Cards.Diamonds.Eight,
-        Cards.Hearts.Ace,
-        Cards.Spades.Ten,
-        Cards.Clubs.Nine,
+        CARDS.CLUBS.EIGHT,
+        CARDS.DIAMONDS.EIGHT,
+        CARDS.HEARTS.ACE,
+        CARDS.SPADES.TEN,
+        CARDS.CLUBS.NINE,
       ]
     }
 
