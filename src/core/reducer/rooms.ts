@@ -1,5 +1,5 @@
 import {
-  default as StateMessage,
+  StateMessage,
   STATE_ADD_BOT,
   STATE_ADD_PLAYER_TO_ROOM,
   STATE_ADD_ROOM,
@@ -7,7 +7,7 @@ import {
   STATE_PLAYER_CHANGE_NAME,
   STATE_REMOVE_ROOM,
   STATE_REPLACE_PLAYER_WITH_BOT,
-  STATE_SET_GAME_STARTING_PLAYER
+  STATE_SET_GAME_STARTING_PLAYER,
 } from '../../types/Messages/StateMessage'
 import { Room } from '../../types/Room'
 
@@ -30,15 +30,15 @@ const rooms = (state: Room[] = [], message: StateMessage): Room[] => {
             ...room,
             players: [
               ...room.players,
-              message.name
+              message.name,
             ],
             scores: [
               ...room.scores,
               {
                 player: message.name,
-                points: []
-              }
-            ]
+                points: [],
+              },
+            ],
           }
         }
 
@@ -52,15 +52,15 @@ const rooms = (state: Room[] = [], message: StateMessage): Room[] => {
             ...room,
             players: [
               ...room.players,
-              message.bot.name
+              message.bot.name,
             ],
             scores: [
               ...room.scores,
               {
                 player: message.bot.name,
-                points: []
-              }
-            ]
+                points: [],
+              },
+            ],
           }
         }
 
@@ -83,7 +83,7 @@ const rooms = (state: Room[] = [], message: StateMessage): Room[] => {
               if (scores.player === message.player) {
                 return {
                   ...scores,
-                  player: message.bot.name
+                  player: message.bot.name,
                 }
               }
 
@@ -91,7 +91,7 @@ const rooms = (state: Room[] = [], message: StateMessage): Room[] => {
             }),
             gameStartingPlayer: room.gameStartingPlayer === message.player
               ? message.bot.name
-              : room.gameStartingPlayer
+              : room.gameStartingPlayer,
           }
         }
         return room
@@ -110,9 +110,9 @@ const rooms = (state: Room[] = [], message: StateMessage): Room[] => {
 
                 return {
                   player,
-                  points: [...points, playerScore]
+                  points: [...points, playerScore],
                 }
-              })
+              }),
           }
         }
 
@@ -132,7 +132,7 @@ const rooms = (state: Room[] = [], message: StateMessage): Room[] => {
                 return message.name
               }
               return name
-            })
+            }),
           }
         }
 
@@ -144,7 +144,7 @@ const rooms = (state: Room[] = [], message: StateMessage): Room[] => {
         if (message.room === room.name) {
           return {
             ...room,
-            gameStartingPlayer: message.player
+            gameStartingPlayer: message.player,
           }
         }
         return room

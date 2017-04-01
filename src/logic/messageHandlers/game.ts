@@ -7,13 +7,13 @@ import {
   I_WANT_NEW_GAME,
   PLAY_GRILL,
   PLAY_HAND_OVER,
-  TAKE_HANDOVER
+  TAKE_HANDOVER,
 } from '../../types/Messages/ClientMessage'
 import {
   LOGIC_GAME_END,
   LOGIC_GAME_START,
   LOGIC_NEXT_ROUND,
-  LOGIC_PLAYERS_READY
+  LOGIC_PLAYERS_READY,
 } from '../../types/Messages/LogicMessage'
 import {
   DEAL_DECK,
@@ -24,7 +24,7 @@ import {
   GRILL_PLAYED,
   HAND_OVER_PLAYED,
   HAND_OVER_TAKEN,
-  UPDATED_SCORES
+  UPDATED_SCORES,
 } from '../../types/Messages/ServerMessage'
 import {
   STATE_ADD_SCORES,
@@ -41,7 +41,7 @@ import {
   STATE_SET_PLAYER_SHOULD_PASS_HANDOVER,
   STATE_SET_PLAYER_WAIT_FOR_ME,
   STATE_SET_PLAYER_WANTS_NEW_GAME,
-  STATE_TAKE_HANDOVER
+  STATE_TAKE_HANDOVER,
 } from '../../types/Messages/StateMessage'
 import { Player } from '../../types/Player'
 import { Room } from '../../types/Room'
@@ -56,7 +56,7 @@ import {
   playerCanTakeHandOver,
   playerHasExactSpaceForHandOver,
   playerHasHandover,
-  playersHaveDeckDealt
+  playersHaveDeckDealt,
 } from '../functions'
 import { createDeck, getPlayerHand } from '../functions/cards'
 
@@ -80,7 +80,7 @@ export const createGameMessageHandlers = (injection: MessageHandlersDI) => {
       dispatch({
         type: STATE_SET_PLAYER_WAIT_FOR_ME,
         player: player.name,
-        value: true
+        value: true,
       })
       player.send({
         type: DEAL_DECK,

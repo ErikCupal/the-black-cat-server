@@ -6,7 +6,7 @@ import {
   GET_ROOMS,
   JOIN_ROOM,
   LEAVE_ROOM,
-  REGISTER
+  REGISTER,
 } from '../../types/Messages/ClientMessage'
 import { LOGIC_PLAYER_JOINED_ROOM } from '../../types/Messages/LogicMessage'
 import {
@@ -17,7 +17,7 @@ import {
   REGISTERED,
   ROOM_CREATED,
   ROOM_JOINED,
-  ROOM_NAME_TAKEN
+  ROOM_NAME_TAKEN,
 } from '../../types/Messages/ServerMessage'
 import {
   STATE_ADD_PLAYER_TO_ROOM,
@@ -31,7 +31,7 @@ import {
   STATE_SET_PLAYER_PASSED_HANDOVER,
   STATE_SET_PLAYER_SHOULD_PASS_HANDOVER,
   STATE_SET_PLAYER_WAIT_FOR_ME,
-  STATE_SET_PLAYER_WANTS_NEW_GAME
+  STATE_SET_PLAYER_WANTS_NEW_GAME,
 } from '../../types/Messages/StateMessage'
 import { Name } from '../../types/Name'
 import { Bot, Player } from '../../types/Player'

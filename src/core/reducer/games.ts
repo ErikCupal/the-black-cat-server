@@ -1,6 +1,6 @@
 import { Game } from '../../types/Game'
 import {
-  default as StateMessage,
+  StateMessage,
   STATE_CREATE_GAME,
   STATE_CREATE_GRILLS_SNAPSHOT,
   STATE_NEXT_ROUND,
@@ -8,7 +8,7 @@ import {
   STATE_PASS_TRICK,
   STATE_PLAY_CARD,
   STATE_REMOVE_GAME,
-  STATE_REPLACE_PLAYER_WITH_BOT
+  STATE_REPLACE_PLAYER_WITH_BOT,
 } from '../../types/Messages/StateMessage'
 import { Name } from '../../types/Name'
 
@@ -49,8 +49,8 @@ const games = (state: Game[] = [], message: StateMessage): Game[] => {
           table: [],
           round: 0,
           grillsSnapshot: [],
-          playerOnTurn: message.playerOnTurn
-        }
+          playerOnTurn: message.playerOnTurn,
+        },
       ]
     }
     case STATE_REMOVE_GAME: {
@@ -87,7 +87,7 @@ const games = (state: Game[] = [], message: StateMessage): Game[] => {
         if (message.roomName === game.room) {
           return {
             ...game,
-            grillsSnapshot: message.grills
+            grillsSnapshot: message.grills,
           }
         }
 
@@ -99,7 +99,7 @@ const games = (state: Game[] = [], message: StateMessage): Game[] => {
         if (message.player === game.playerOnTurn) {
           return {
             ...game,
-            playerOnTurn: message.bot.name
+            playerOnTurn: message.bot.name,
           }
         }
         

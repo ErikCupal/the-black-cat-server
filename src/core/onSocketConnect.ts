@@ -2,11 +2,11 @@ import { SERVER_FULL } from '../types/Messages/ServerMessage'
 import isSafeMessage from './isSafeMessage'
 import { LogicMessage } from '../types/Messages/LogicMessage'
 import { State } from '../types/State'
-import ClientMessage, { CONNECT, DISCONNECT } from '../types/Messages/ClientMessage'
+import { ClientMessage, CONNECT, DISCONNECT } from '../types/Messages/ClientMessage'
 import { STATE_CREATE_NEW_PLAYER } from '../types/Messages/StateMessage'
 import { Name } from '../types/Name'
 import { Id } from '../types/Id'
-import ServerMessage from '../types/Messages/ServerMessage'
+import { ServerMessage } from '../types/Messages/ServerMessage'
 import { Store } from 'redux'
 import { Subject } from 'rxjs'
 
@@ -16,7 +16,7 @@ const MESSAGE = 'MESSAGE'
 const onSocketConnect = (
   socket: SocketIO.Socket,
   store: Store<State>,
-  subject: Subject<ClientMessage>
+  subject: Subject<ClientMessage>,
 ) => {
 
   const playersCount = store.getState().players.length
@@ -44,7 +44,9 @@ const onSocketConnect = (
         room.players.forEach(playerName => {
           if (player.name !== playerName) {
             const _player = getPlayerByName(playerName)
-            _player && _player.send(message)
+            if (_player) {
+              _player.send(message)
+            }
           }
         })
       }
@@ -58,7 +60,9 @@ const onSocketConnect = (
       if (room) {
         room.players.forEach(playerName => {
           const _player = getPlayerByName(playerName)
-          _player && _player.send(message)
+          if (_player) {
+            _player.send(message)
+          }
         })
       }
     }
@@ -116,7 +120,7 @@ const onSocketConnect = (
         if (isSafeMessage(message, player)) {
           subject.next({
             player,
-            ...message
+            ...message,
           })
         }
       }

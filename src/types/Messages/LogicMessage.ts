@@ -1,3 +1,4 @@
+/* tslint:disable:class-name */
 import { Name } from '../Name'
 
 /**
@@ -23,12 +24,10 @@ export const LOGIC_NEXT_ROUND = 'LOGIC_NEXT_ROUND'
 export const LOGIC_FINISH_ROUND = 'LOGIC_FINISH_ROUND'
 export const LOGIC_GAME_END = 'LOGIC_GAME_END'
 
-export type LOGIC_PLAYER_JOINED_ROOM = { type: typeof LOGIC_PLAYER_JOINED_ROOM, name: Name }
-export type LOGIC_ROOM_START = { type: typeof LOGIC_ROOM_START, name: Name }
-export type LOGIC_GAME_START = { type: typeof LOGIC_GAME_START, roomName: Name, newRoom?: boolean }
-export type LOGIC_PLAYERS_READY = { type: typeof LOGIC_PLAYERS_READY, roomName: Name }
-export type LOGIC_NEXT_ROUND = { type: typeof LOGIC_NEXT_ROUND, roomName: Name }
-export type LOGIC_FINISH_ROUND = { type: typeof LOGIC_FINISH_ROUND, roomName: Name }
-export type LOGIC_GAME_END = { type: typeof LOGIC_GAME_END, roomName: Name }
-
-export default LogicMessage
+export interface LOGIC_PLAYER_JOINED_ROOM { type: typeof LOGIC_PLAYER_JOINED_ROOM, name: Name }
+export interface LOGIC_ROOM_START { type: typeof LOGIC_ROOM_START, name: Name }
+export interface LOGIC_GAME_START { type: typeof LOGIC_GAME_START, roomName: Name, newRoom?: boolean }
+export interface LOGIC_PLAYERS_READY { type: typeof LOGIC_PLAYERS_READY, roomName: Name }
+export interface LOGIC_NEXT_ROUND { type: typeof LOGIC_NEXT_ROUND, roomName: Name }
+export interface LOGIC_FINISH_ROUND { type: typeof LOGIC_FINISH_ROUND, roomName: Name }
+export interface LOGIC_GAME_END { type: typeof LOGIC_GAME_END, roomName: Name }

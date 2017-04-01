@@ -17,7 +17,7 @@ import {
   getRankAsNumber,
   getSuitAsNumber,
   sortCardsByGreatestValue,
-  sortCardsByLowestValue
+  sortCardsByLowestValue,
 } from '../../src/logic/functions/cards'
 import { Card, Deck, Grills, Hand, Rank, Suit, Table } from '../../src/types/Cards'
 import { CARDS, DECK } from '../constants'

@@ -1,7 +1,7 @@
 import { shuffle } from 'lodash'
 import { BOT_NICKS } from '../constants'
 import returnof from 'returnof'
-import ServerMessage from '../../types/Messages/ServerMessage'
+import { ServerMessage } from '../../types/Messages/ServerMessage'
 import { getBotResponse, normalizePlayerIndex } from '.'
 import { DispatchForBot } from '../../core'
 import { Game } from '../../types/Game'
@@ -109,7 +109,7 @@ export const createStateDependentFunctions = (getState: () => State) => {
     return getPlayersInRoom(roomName)
       .map(player => ({
         player: player.name,
-        points: getPenaltyPoints(grilledCards)(player.pile)
+        points: getPenaltyPoints(grilledCards)(player.pile),
       }))
   }
 
@@ -171,14 +171,14 @@ export const createStateDependentFunctions = (getState: () => State) => {
       players: [player],
       scores: [{
         player,
-        points: []
+        points: [],
       }],
       send: (message: ServerMessage) => {
         getPlayersInRoom(name).forEach(player => {
           player.send(message)
         })
       },
-      game: () => findGame(name)
+      game: () => findGame(name),
     }
 
     return room
@@ -187,7 +187,7 @@ export const createStateDependentFunctions = (getState: () => State) => {
   const botCreatorFactory = (
     dispatch: DispatchForBot,
     seconds: (seconds: number) => Promise<void>,
-    shuffleArray: typeof shuffle
+    shuffleArray: typeof shuffle,
   ) => {
 
     const createBot = (player?: NonregisteredPlayer): Bot => {
@@ -293,7 +293,6 @@ export const createStateDependentFunctions = (getState: () => State) => {
 
     return createBot
   }
-
 
   return {
 

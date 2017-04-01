@@ -5,20 +5,22 @@ import { PlayerScore } from '../../types/PlayerScore'
 import { Card, Grills, HandOver } from '../../types/Cards'
 import { first, flatMap } from 'lodash'
 import { Game } from '../../types/Game'
-import ClientMessage, {
+import {
+  ClientMessage,
   DECK_DEALT,
   I_AM_READY,
   I_WANT_NEW_GAME,
   PLAY_CARD,
   PLAY_HAND_OVER,
-  TAKE_HANDOVER
+  TAKE_HANDOVER,
 } from '../../types/Messages/ClientMessage'
-import ServerMessage, {
+import {
+  ServerMessage,
   DEAL_DECK,
   DO_PASS_HANDOVER,
   DO_TAKE_HANDOVER,
   GAME_ENDED,
-  NEXT_TURN
+  NEXT_TURN,
 } from '../../types/Messages/ServerMessage'
 import { Player } from '../../types/Player'
 import { bestCardToPlay, cardEqual, cardIsIn, cardIsOfSuit, sortCardsByGreatestValue } from './cards'

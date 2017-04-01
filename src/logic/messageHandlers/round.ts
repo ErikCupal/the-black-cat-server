@@ -11,7 +11,7 @@ import {
   STATE_NEXT_ROUND,
   STATE_NEXT_TURN,
   STATE_PASS_TRICK,
-  STATE_PLAY_CARD
+  STATE_PLAY_CARD,
 } from '../../types/Messages/StateMessage'
 import { Room } from '../../types/Room'
 

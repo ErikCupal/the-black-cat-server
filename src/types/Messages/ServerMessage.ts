@@ -1,3 +1,4 @@
+/* tslint:disable:class-name */
 import { Card, Grills, Hand, HandOver } from '../Cards'
 import { Name } from '../Name'
 import { PlayerScore } from '../PlayerScore'
@@ -6,7 +7,7 @@ import { PlayerScore } from '../PlayerScore'
  * Contains all message types
  * that the server can send to clients
  */
-type ServerMessage =
+export type ServerMessage =
 
   | CONNECTION_CONFIRMATION
   | SERVER_FULL
@@ -76,38 +77,36 @@ export const AVAILABLE_ROOMS = 'AVAILABLE_ROOMS'
 export const UPDATED_SCORES = 'UPDATED_SCORES'
 export const CHAT_MESSAGE = 'CHAT_MESSAGE'
 
-export type CONNECTION_CONFIRMATION = { type: typeof CONNECTION_CONFIRMATION }
-export type SERVER_FULL = { type: typeof SERVER_FULL }
+export interface CONNECTION_CONFIRMATION { type: typeof CONNECTION_CONFIRMATION }
+export interface SERVER_FULL { type: typeof SERVER_FULL }
 
-export type REGISTERED = { type: typeof REGISTERED, name: Name }
-export type NAME_TAKEN = { type: typeof NAME_TAKEN }
+export interface REGISTERED { type: typeof REGISTERED, name: Name }
+export interface NAME_TAKEN { type: typeof NAME_TAKEN }
 
-export type ROOM_CREATED = { type: typeof ROOM_CREATED, name: Name }
-export type ROOM_NAME_TAKEN = { type: typeof ROOM_NAME_TAKEN }
-export type ROOM_JOINED = { type: typeof ROOM_JOINED, name: Name, players: Name[] }
-export type ROOM_FULL = { type: typeof ROOM_FULL }
-export type ROOM_LEFT = { type: typeof ROOM_LEFT }
-export type PLAYER_JOINED = { type: typeof PLAYER_JOINED, player: Name }
-export type PLAYER_REPLACED_WITH_BOT = { type: typeof PLAYER_REPLACED_WITH_BOT, player: Name, bot: Name }
+export interface ROOM_CREATED { type: typeof ROOM_CREATED, name: Name }
+export interface ROOM_NAME_TAKEN { type: typeof ROOM_NAME_TAKEN }
+export interface ROOM_JOINED { type: typeof ROOM_JOINED, name: Name, players: Name[] }
+export interface ROOM_FULL { type: typeof ROOM_FULL }
+export interface ROOM_LEFT { type: typeof ROOM_LEFT }
+export interface PLAYER_JOINED { type: typeof PLAYER_JOINED, player: Name }
+export interface PLAYER_REPLACED_WITH_BOT { type: typeof PLAYER_REPLACED_WITH_BOT, player: Name, bot: Name }
 
-export type GAME_STARTED = { type: typeof GAME_STARTED }
-export type GAME_ENDED = { type: typeof GAME_ENDED }
+export interface GAME_STARTED { type: typeof GAME_STARTED }
+export interface GAME_ENDED { type: typeof GAME_ENDED }
 
-export type NEXT_ROUND = { type: typeof NEXT_ROUND }
-export type NEXT_TURN = { type: typeof NEXT_TURN, playerOnTurn: Name }
+export interface NEXT_ROUND { type: typeof NEXT_ROUND }
+export interface NEXT_TURN { type: typeof NEXT_TURN, playerOnTurn: Name }
 
-export type DEAL_DECK = { type: typeof DEAL_DECK, hand: Hand }
-export type DO_PASS_HANDOVER = { type: typeof DO_PASS_HANDOVER }
-export type DO_TAKE_HANDOVER = { type: typeof DO_TAKE_HANDOVER, handOver: HandOver }
+export interface DEAL_DECK { type: typeof DEAL_DECK, hand: Hand }
+export interface DO_PASS_HANDOVER { type: typeof DO_PASS_HANDOVER }
+export interface DO_TAKE_HANDOVER { type: typeof DO_TAKE_HANDOVER, handOver: HandOver }
 
-export type HAND_OVER_PLAYED = { type: typeof HAND_OVER_PLAYED, from: Name }
-export type HAND_OVER_TAKEN = { type: typeof HAND_OVER_TAKEN, player: Name }
-export type GRILL_PLAYED = { type: typeof GRILL_PLAYED, player: Name, grill: Grills }
-export type CARD_PLAYED = { type: typeof CARD_PLAYED, player: Name, card: Card, cardFromGrill: boolean }
-export type TRICK_FINISHED = { type: typeof TRICK_FINISHED, receiver: Name }
+export interface HAND_OVER_PLAYED { type: typeof HAND_OVER_PLAYED, from: Name }
+export interface HAND_OVER_TAKEN { type: typeof HAND_OVER_TAKEN, player: Name }
+export interface GRILL_PLAYED { type: typeof GRILL_PLAYED, player: Name, grill: Grills }
+export interface CARD_PLAYED { type: typeof CARD_PLAYED, player: Name, card: Card, cardFromGrill: boolean }
+export interface TRICK_FINISHED { type: typeof TRICK_FINISHED, receiver: Name }
 
-export type AVAILABLE_ROOMS = { type: typeof AVAILABLE_ROOMS, rooms: { name: Name, available: boolean }[] }
-export type UPDATED_SCORES = { type: typeof UPDATED_SCORES, scores: { player: Name, points: number }[] }
-export type CHAT_MESSAGE = { type: typeof CHAT_MESSAGE, text: string, player: Name }
-
-export default ServerMessage
+export interface AVAILABLE_ROOMS { type: typeof AVAILABLE_ROOMS, rooms: { name: Name, available: boolean }[] }
+export interface UPDATED_SCORES { type: typeof UPDATED_SCORES, scores: { player: Name, points: number }[] }
+export interface CHAT_MESSAGE { type: typeof CHAT_MESSAGE, text: string, player: Name }

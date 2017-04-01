@@ -1,7 +1,7 @@
 import { Game } from './Game'
 import { PlayerScore } from './PlayerScore'
 import { Name } from './Name'
-import ServerMessage from '../types/Messages/ServerMessage'
+import { ServerMessage } from '../types/Messages/ServerMessage'
 
 export interface Room {
   readonly name: Name

@@ -13,13 +13,13 @@ import {
   playerCanTakeHandOver,
   playerHasExactSpaceForHandOver,
   playerHasHandover,
-  tableIsFull
+  tableIsFull,
 } from '../../src/logic/functions'
 
 // tslint:disable-next-line:no-any
 const returnUndefined = (...args: any[]) => undefined
 // tslint:disable-next-line:no-any
-const throwNotNeeded = (...args: any[]): never => { throw 'the function does not need this' }
+const throwNotNeeded = (...args: any[]): never => { throw Error('the function does not need this') }
 
 const playerTemplate: Player = {
   name: 'player',
@@ -131,7 +131,7 @@ describe('validators work', () => {
     ].map(({ grill, result }) => ({
       grill,
       result,
-      player: player,
+      player,
     }))
 
     parameters.forEach(({ player, grill, result }) => {
@@ -180,13 +180,13 @@ describe('validators work', () => {
         CARDS.HEARTS.ACE,
         CARDS.SPADES.TEN,
         CARDS.CLUBS.NINE,
-      ]
+      ],
     }
     const player3: Player = {
       ...playerTemplate,
       hand: [
         CARDS.CLUBS.EIGHT,
-      ]
+      ],
     }
 
     expect(playerHasExactSpaceForHandOver(player1)).toBeFalsy()
@@ -205,7 +205,7 @@ describe('validators work', () => {
         CARDS.HEARTS.ACE,
         CARDS.SPADES.TEN,
         CARDS.CLUBS.NINE,
-      ]
+      ],
     }
 
     expect(playerCanTakeHandOver(player1)).toBeFalsy()

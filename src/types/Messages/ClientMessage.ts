@@ -1,3 +1,4 @@
+/* tslint:disable:class-name interface-name */
 import { Card, Grills, HandOver } from '../Cards'
 import { Name } from '../Name'
 import { NonregisteredPlayer, Player } from '../Player'
@@ -6,7 +7,7 @@ import { NonregisteredPlayer, Player } from '../Player'
  * Contains all message types
  * that client can send
  */
-type ClientMessage =
+export type ClientMessage =
 
   | CONNECT
   | DISCONNECT
@@ -50,30 +51,28 @@ export const I_WANT_NEW_GAME = 'I_WANT_NEW_GAME'
 export const GET_ROOMS = 'GET_ROOMS'
 export const SEND_CHAT_MESSAGE = 'SEND_CHAT_MESSAGE'
 
-export type CONNECT = NONREGISTERED_PLAYER & { type: typeof CONNECT }
-export type DISCONNECT = NONREGISTERED_PLAYER & { type: typeof DISCONNECT }
-export type REGISTER = NONREGISTERED_PLAYER & { type: typeof REGISTER, name: Name }
+export interface CONNECT extends NONREGISTERED_PLAYER { type: typeof CONNECT }
+export interface DISCONNECT extends NONREGISTERED_PLAYER { type: typeof DISCONNECT }
+export interface REGISTER extends NONREGISTERED_PLAYER { type: typeof REGISTER, name: Name }
 
-export type CREATE_ROOM = PLAYER & { type: typeof CREATE_ROOM, name: Name }
-export type JOIN_ROOM = PLAYER & { type: typeof JOIN_ROOM, name: Name }
-export type LEAVE_ROOM = PLAYER & { type: typeof LEAVE_ROOM }
-export type ADD_BOT = PLAYER & { type: typeof ADD_BOT }
+export interface CREATE_ROOM extends PLAYER { type: typeof CREATE_ROOM, name: Name }
+export interface JOIN_ROOM extends PLAYER { type: typeof JOIN_ROOM, name: Name }
+export interface LEAVE_ROOM extends PLAYER { type: typeof LEAVE_ROOM }
+export interface ADD_BOT extends PLAYER { type: typeof ADD_BOT }
 
-export type PLAY_HAND_OVER = PLAYER & { type: typeof PLAY_HAND_OVER, handOver: HandOver }
-export type TAKE_HANDOVER = PLAYER & { type: typeof TAKE_HANDOVER }
-export type PLAY_GRILL = PLAYER & { type: typeof PLAY_GRILL, grill: Grills }
-export type PLAY_CARD = PLAYER & { type: typeof PLAY_CARD, card: Card }
+export interface PLAY_HAND_OVER extends PLAYER { type: typeof PLAY_HAND_OVER, handOver: HandOver }
+export interface TAKE_HANDOVER extends PLAYER { type: typeof TAKE_HANDOVER }
+export interface PLAY_GRILL extends PLAYER { type: typeof PLAY_GRILL, grill: Grills }
+export interface PLAY_CARD extends PLAYER { type: typeof PLAY_CARD, card: Card }
 
-export type DECK_DEALT = PLAYER & { type: typeof DECK_DEALT }
-export type I_AM_READY = PLAYER & { type: typeof I_AM_READY }
-export type I_WANT_NEW_GAME = PLAYER & { type: typeof I_WANT_NEW_GAME }
+export interface DECK_DEALT extends PLAYER { type: typeof DECK_DEALT }
+export interface I_AM_READY extends PLAYER { type: typeof I_AM_READY }
+export interface I_WANT_NEW_GAME extends PLAYER { type: typeof I_WANT_NEW_GAME }
 
-export type GET_ROOMS = PLAYER & { type: typeof GET_ROOMS }
-export type SEND_CHAT_MESSAGE = PLAYER & { type: typeof SEND_CHAT_MESSAGE, text: string }
+export interface GET_ROOMS extends PLAYER { type: typeof GET_ROOMS }
+export interface SEND_CHAT_MESSAGE extends PLAYER { type: typeof SEND_CHAT_MESSAGE, text: string }
 
 /** Helper type. It guarantees that there is attached [Player] object to the message */
-export type PLAYER = { player: Player }
+export interface PLAYER { player: Player }
 /** Helper type. It guarantees that there is attached [NonregisteredPlayer] object to the message */
-export type NONREGISTERED_PLAYER = { player: NonregisteredPlayer }
-
-export default ClientMessage
+export interface NONREGISTERED_PLAYER { player: NonregisteredPlayer }

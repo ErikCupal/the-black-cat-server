@@ -123,7 +123,7 @@ export const getPenaltyPoints = (grilledCards: Grills) => (pile: Pile): number =
 
 export const createDeck = (): Deck => {
   const suits: Suit[] = [
-    'Spades', 'Hearts', 'Diamonds', 'Clubs'
+    'Spades', 'Hearts', 'Diamonds', 'Clubs',
   ]
   const ranks: Rank[] = [
     'Seven', 'Eight', 'Nine', 'Ten',

@@ -1,4 +1,4 @@
-import ServerMessage from '../types/Messages/ServerMessage'
+import { ServerMessage } from '../types/Messages/ServerMessage'
 import { Game } from './Game'
 import { Room } from './Room'
 import { Grills, Hand, HandOver, Pile } from './Cards'

@@ -16,7 +16,7 @@ import {
   PLAY_HAND_OVER,
   REGISTER,
   SEND_CHAT_MESSAGE,
-  TAKE_HANDOVER
+  TAKE_HANDOVER,
 } from '../types/Messages/ClientMessage'
 import {
   LOGIC_FINISH_ROUND,
@@ -25,7 +25,7 @@ import {
   LOGIC_NEXT_ROUND,
   LOGIC_PLAYER_JOINED_ROOM,
   LOGIC_PLAYERS_READY,
-  LOGIC_ROOM_START
+  LOGIC_ROOM_START,
 } from '../types/Messages/LogicMessage'
 import { Bot, Player } from '../types/Player'
 import { createStateDependentFunctions, StateDependantFunctions } from './functions/stateDependentFunctions'
@@ -43,7 +43,7 @@ export type MessageHandlersDI =
     dispatch: Dispatch
     log: typeof console.log
     seconds: (seconds: number) => Promise<void>,
-    createBot: (player: Player) => Bot
+    createBot: (player: Player) => Bot,
   }
 
 /**

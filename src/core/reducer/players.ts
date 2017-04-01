@@ -1,6 +1,6 @@
 import { cardEqual, cardNotEqual, cardIsNotIn } from '../../logic/functions/cards'
 import {
-  default as StateMessage,
+  StateMessage,
   STATE_ADD_BOT,
   STATE_CARDS_TO_HAND,
   STATE_CREATE_NEW_PLAYER,
@@ -16,7 +16,7 @@ import {
   STATE_SET_PLAYER_SHOULD_PASS_HANDOVER,
   STATE_SET_PLAYER_WAIT_FOR_ME,
   STATE_SET_PLAYER_WANTS_NEW_GAME,
-  STATE_TAKE_HANDOVER
+  STATE_TAKE_HANDOVER,
 } from '../../types/Messages/StateMessage'
 import { Player } from '../../types/Player'
 
@@ -30,7 +30,7 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
         if (message.player === player.name) {
           return {
             ...player,
-            hand: [...player.hand, ...message.cards]
+            hand: [...player.hand, ...message.cards],
           }
         }
 
@@ -69,7 +69,7 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
         if (player.name === message.player) {
           return {
             ...player,
-            waitForMe: message.value
+            waitForMe: message.value,
           }
         }
 
@@ -81,7 +81,7 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
         if (player.name === message.player) {
           return {
             ...player,
-            shouldPassHandOver: message.value
+            shouldPassHandOver: message.value,
           }
         }
 
@@ -93,7 +93,7 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
         if (player.name === message.player) {
           return {
             ...player,
-            didPassedHandOver: message.value
+            didPassedHandOver: message.value,
           }
         }
 
@@ -105,7 +105,7 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
         if (player.name === message.player) {
           return {
             ...player,
-            wantsNewGame: message.value
+            wantsNewGame: message.value,
           }
         }
 
@@ -118,14 +118,14 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
           return {
             ...player,
             hand: player.hand.filter(cardIsNotIn(message.handOver)),
-            didPassedHandOver: true
+            didPassedHandOver: true,
           }
         }
 
         if (player.name === message.to) {
           return {
             ...player,
-            handOver: message.handOver
+            handOver: message.handOver,
           }
         }
 
@@ -138,7 +138,7 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
           return {
             ...player,
             hand: [...player.hand, ...player.handOver],
-            handOver: []
+            handOver: [],
           }
         }
 
@@ -150,7 +150,7 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
         if (player.name === message.receiver.name) {
           return {
             ...player,
-            pile: [...player.pile, ...message.trick]
+            pile: [...player.pile, ...message.trick],
           }
         }
 
@@ -165,7 +165,7 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
             hand: player.hand.filter(card => {
               return !message.grill.find(cardEqual(card))
             }),
-            grills: [...player.grills, ...message.grill]
+            grills: [...player.grills, ...message.grill],
           }
         }
 
@@ -178,7 +178,7 @@ const players = (state: Player[] = [], message: StateMessage): Player[] => {
           return {
             ...player,
             hand: player.hand.filter(cardNotEqual(message.card)),
-            grills: player.grills.filter(cardNotEqual(message.card))
+            grills: player.grills.filter(cardNotEqual(message.card)),
           }
         }
 
