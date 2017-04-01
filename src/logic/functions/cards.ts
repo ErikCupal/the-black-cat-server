@@ -1,7 +1,6 @@
+import { THE_BLACK_CAT_CARD } from '../constants'
 import _ from 'lodash'
 import { Card, Deck, Grills, Hand, Pile, Rank, Suit, Table } from '../../types/Cards'
-
-export const theBlackCatCard: Card = { suit: 'Spades', rank: 'Queen' }
 
 export const cardEqual = (a: Card) => (b: Card): boolean => {
   return a.suit === b.suit && a.rank === b.rank
@@ -113,7 +112,7 @@ export const getPenaltyPoints = (grilledCards: Grills) => (pile: Pile): number =
     }
   })()
 
-  const blackCatGrilled = !!grilledCards.find(cardEqual(theBlackCatCard))
+  const blackCatGrilled = !!grilledCards.find(cardEqual(THE_BLACK_CAT_CARD))
 
   const points = _(pile)
     .map(getCardPoints(heartsGrillCoeficient, blackCatGrilled))
@@ -150,7 +149,7 @@ export const getPlayerHand = (deck: Deck, playerIndex: number): Hand => {
   }
   const hand = deck
     .filter((card, cardIndex) => cardIndex >= cardsRange.low && cardIndex < cardsRange.high)
-    
+
   return hand
 }
 
@@ -170,13 +169,13 @@ export const bestCardToPlay = (hand: Hand, grill: Grills, table: Table): Card =>
 
   if (!firstCardOnTable) {
     const [lowestCard, secondLowestCard] = sortCardsByLowestValue(playableCards)
-    if (cardNotEqual(lowestCard)(theBlackCatCard)) {
+    if (cardNotEqual(lowestCard)(THE_BLACK_CAT_CARD)) {
       return lowestCard
     } else {
       if (secondLowestCard) {
         return secondLowestCard
       } else {
-        return theBlackCatCard
+        return THE_BLACK_CAT_CARD
       }
     }
   }
@@ -185,8 +184,8 @@ export const bestCardToPlay = (hand: Hand, grill: Grills, table: Table): Card =>
 
   const playableCardsOfTableSuit = playableCards.filter(cardIsOfSuit(tableSuit))
   if (playableCardsOfTableSuit.length === 0) {
-    if (tableSuit !== 'Spades' && playableCards.find(cardEqual(theBlackCatCard))) {
-      return theBlackCatCard
+    if (tableSuit !== 'Spades' && playableCards.find(cardEqual(THE_BLACK_CAT_CARD))) {
+      return THE_BLACK_CAT_CARD
     }
 
     const [worstCard] = sortCardsByGreatestValue(playableCards)

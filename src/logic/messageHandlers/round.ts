@@ -81,7 +81,7 @@ export const createRoundMessageHandlers = (di: MessageHandlersDI) => {
 
   const onPlayCard = async ({ player, card }: PLAY_CARD) => {
     if (playedCardIsValid(card, player)) {
-      const cardFromGrill = !!player.grills.find(cardEqual(card))
+      const cardFromGrill: boolean = !!player.grills.find(cardEqual(card))
 
       dispatch({ type: STATE_PLAY_CARD, player, card })
       player.sendToOthers({ type: CARD_PLAYED, player: player.name, card, cardFromGrill })

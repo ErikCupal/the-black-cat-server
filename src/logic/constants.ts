@@ -1,7 +1,6 @@
-/**
- * Nicks for bots
- */
-export const botNicks = [
+import { Card } from '../types/Cards'
+
+export const BOT_NICKS = [
   'Geralt of Rivia',
   'Crach an Craite',
   'Emiel Regis Rohellec Terzieff-Godefroy',
@@ -24,3 +23,5 @@ export const botNicks = [
   'Keira Metz',
   'Triss Marigold',
 ]
+
+export const THE_BLACK_CAT_CARD: Card = { suit: 'Spades', rank: 'Queen' }

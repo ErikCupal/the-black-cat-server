@@ -1,3 +1,4 @@
+import { Room } from '../../types/Room'
 import { last } from 'lodash'
 import { Name } from '../../types/Name'
 import { PlayerScore } from '../../types/PlayerScore'
@@ -111,7 +112,7 @@ export const tableIsFull = (game: Game): boolean => game.table.length === 4
 
 export const isLastRound = (round: number): boolean => round === 8
 
-export const arePlayersReadyToPlay = (players: Player[]): boolean => {
+export const playersAreReadyToPlay = (players: Player[]): boolean => {
   const playersReady = players
       .filter(p => {
         return p.didPassedHandOver === true
@@ -126,6 +127,13 @@ export const playersHaveDeckDealt = (players: Player[]): boolean => {
   const playersWithDeckDealt = players.filter(p => p.waitForMe === false)
   return playersWithDeckDealt.length === 4
 }
+
+export const playersWantNewGame = (players: Player[]): boolean => {
+  const playersThatWantNewGame = players.filter(p => p.wantsNewGame)
+  return playersThatWantNewGame.length === 4
+}
+
+export const roomIsFull = (room: Room): boolean => room.players.length === 4
 
 export const createLatestScores = (scores: PlayerScore[]): { player: Name, points: number }[] => {
   return scores

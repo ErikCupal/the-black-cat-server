@@ -46,7 +46,7 @@ import {
 import { Player } from '../../types/Player'
 import { Room } from '../../types/Room'
 import {
-  arePlayersReadyToPlay,
+  playersAreReadyToPlay,
   createLatestScores,
   getPlayersGrills,
   grillIsValid,
@@ -185,7 +185,7 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
       dispatch({ type: STATE_SET_PLAYER_WAIT_FOR_ME, player: player.name, value: false })
 
       const players = getPlayersInRoom(room.name)
-      if (arePlayersReadyToPlay(players)) {
+      if (playersAreReadyToPlay(players)) {
         players.forEach(p => resetPassedHandOverFlag(p))
         dispatch({ type: LOGIC_PLAYERS_READY, roomName: room.name })
       }

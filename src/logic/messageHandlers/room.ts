@@ -1,3 +1,4 @@
+import { playersWantNewGame, roomIsFull } from '../functions'
 import { AVAILABLE_ROOMS, CHAT_MESSAGE, PLAYER_JOINED } from '../../types/Messages/ServerMessage'
 import { Bot } from '../../types/Player'
 import { STATE_ADD_BOT, STATE_SET_PLAYER_WANTS_NEW_GAME } from '../../types/Messages/StateMessage'
@@ -28,9 +29,9 @@ export const createRoomMessageHandlers = (di: MessageHandlersDI) => {
     if (room) {
       dispatch({ type: STATE_SET_PLAYER_WANTS_NEW_GAME, player: player.name, value: true })
 
-      const playersInRoom = getPlayersInRoom(room.name)
-      if (playersInRoom.filter(p => p.wantsNewGame).length === 4) {
-        playersInRoom.forEach(player => {
+      const players = getPlayersInRoom(room.name)
+      if (playersWantNewGame(players)) {
+        players.forEach(player => {
           dispatch({ type: STATE_SET_PLAYER_WANTS_NEW_GAME, player: player.name, value: false })
         })
         dispatch({ type: LOGIC_GAME_START, roomName: room.name })
@@ -42,14 +43,14 @@ export const createRoomMessageHandlers = (di: MessageHandlersDI) => {
     const room = findRoom(name) as Room
     log(`👌 New player in ${name}! Total players: ${room.players.length}`)
 
-    if (room.players.length === 4) {
+    if (roomIsFull(room)) {
       dispatch({ type: LOGIC_ROOM_START, name: room.name })
     }
   }
 
   const onAddBot = ({ player }: ADD_BOT) => {
     const room = player.room()
-    if (room && room.players.length < 4) {
+    if (room && !roomIsFull(room)) {
       const bot: Bot = createBot(player)
       dispatch({ type: STATE_ADD_BOT, bot, room: room.name })
       room.send({ type: PLAYER_JOINED, player: bot.name })
