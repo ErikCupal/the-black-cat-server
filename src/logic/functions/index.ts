@@ -1,3 +1,6 @@
+import { last } from 'lodash'
+import { Name } from '../../types/Name'
+import { PlayerScore } from '../../types/PlayerScore'
 import { Card, HandOver } from '../../types/Cards'
 import { first } from 'lodash'
 import { Game } from '../../types/Game'
@@ -107,6 +110,30 @@ export const playerCanTakeHandOver = (player: Player): boolean => {
 export const tableIsFull = (game: Game): boolean => game.table.length === 4
 
 export const isLastRound = (round: number): boolean => round === 8
+
+export const arePlayersReadyToPlay = (players: Player[]): boolean => {
+  const playersReady = players
+      .filter(p => {
+        return p.didPassedHandOver === true
+          && p.waitForMe === false
+          && p.hand.concat(p.grills).length === 8
+          && p.handOver.length === 0
+      })
+  return playersReady.length === 4
+}
+
+export const playersHaveDeckDealt = (players: Player[]): boolean => {
+  const playersWithDeckDealt = players.filter(p => p.waitForMe === false)
+  return playersWithDeckDealt.length === 4
+}
+
+export const createLatestScores = (scores: PlayerScore[]): { player: Name, points: number }[] => {
+  return scores
+    .map(score => ({
+      player: score.player,
+      points: last(score.points),
+    }))
+}
 
 export const getBotResponse = async (
   message: ServerMessage,

@@ -46,13 +46,16 @@ import {
 import { Player } from '../../types/Player'
 import { Room } from '../../types/Room'
 import {
+  arePlayersReadyToPlay,
+  createLatestScores,
   grillIsValid,
   handOverIsValid,
   playerCanBeReady,
   playerCanHaveDealtDeck,
   playerCanTakeHandOver,
+  playerHasExactSpaceForHandOver,
   playerHasHandover,
-  playerHasExactSpaceForHandOver
+  playersHaveDeckDealt
 } from '../functions'
 import { createDeck } from '../functions/cards'
 
@@ -113,11 +116,7 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
     dispatch({ type: STATE_ADD_SCORES, room: roomName, gameScores })
 
     const room = findRoom(roomName) as Room
-    const latestScores = room.scores
-      .map(score => ({
-        player: score.player,
-        points: last(score.points),
-      }))
+    const latestScores = createLatestScores(room.scores)
     room.send({ type: UPDATED_SCORES, scores: latestScores })
 
     dispatch({ type: STATE_REMOVE_GAME, room: roomName })
@@ -136,8 +135,8 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
       const room = player.room() as Room
       dispatch({ type: STATE_SET_PLAYER_WAIT_FOR_ME, player: player.name, value: false })
 
-      const players = getPlayersInRoom(room.name).filter(p => p.waitForMe === false)
-      if (players.length === 4) {
+      const players = getPlayersInRoom(room.name)
+      if (playersHaveDeckDealt(players)) {
         players.forEach(player => {
           dispatch({ type: STATE_SET_PLAYER_WAIT_FOR_ME, player: player.name, value: true })
           dispatch({ type: STATE_SET_PLAYER_SHOULD_PASS_HANDOVER, player: player.name, value: true })
@@ -146,10 +145,6 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
         })
       }
     }
-  }
-
-  const resetPassedHandOverFlag = (player: Player) => {
-    dispatch({ type: STATE_SET_PLAYER_PASSED_HANDOVER, player: player.name, value: false })
   }
 
   const onPlayHandOver = ({ player, handOver }: PLAY_HAND_OVER) => {
@@ -183,20 +178,18 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
     }
   }
 
+  const resetPassedHandOverFlag = (player: Player) => {
+    dispatch({ type: STATE_SET_PLAYER_PASSED_HANDOVER, player: player.name, value: false })
+  }
+
   const onPlayerIsReady = ({ player }: I_AM_READY) => {
     if (playerCanBeReady(player)) {
       const room = player.room() as Room
       dispatch({ type: STATE_SET_PLAYER_WAIT_FOR_ME, player: player.name, value: false })
 
-      const playersReady = getPlayersInRoom(room.name)
-        .filter(p => {
-          return p.didPassedHandOver === true
-            && p.waitForMe === false
-            && p.hand.concat(p.grills).length === 8
-            && p.handOver.length === 0
-        })
-      if (playersReady.length === 4) {
-        playersReady.forEach(p => resetPassedHandOverFlag(p))
+      const players = getPlayersInRoom(room.name)
+      if (arePlayersReadyToPlay(players)) {
+        players.forEach(p => resetPassedHandOverFlag(p))
         dispatch({ type: LOGIC_PLAYERS_READY, roomName: room.name })
       }
     }
@@ -215,11 +208,9 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
   }
 
   return {
-    dealCards,
     onGameStart,
     onGameEnd,
     onPlayerDeckDealt,
-    resetPassedHandOverFlag,
     onPlayHandOver,
     onTakeHandOver,
     onPlayGrill,

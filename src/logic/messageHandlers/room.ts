@@ -47,7 +47,7 @@ export const createRoomMessageHandlers = (di: MessageHandlersDI) => {
     }
   }
 
-  const onAddBot = async ({ player }: ADD_BOT) => {
+  const onAddBot = ({ player }: ADD_BOT) => {
     const room = player.room()
     if (room && room.players.length < 4) {
       const bot: Bot = createBot(player)
