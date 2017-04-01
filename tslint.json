@@ -64,7 +64,7 @@
     "no-null-keyword": true,
     "max-line-length": [
       true,
-      130
+      120
     ],
     "jsdoc-format": true,
     "no-any": true
