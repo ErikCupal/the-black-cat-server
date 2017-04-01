@@ -12,7 +12,7 @@ const config = (debug) => ({
 
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, './build/')
+    path: path.resolve(__dirname, debug ? './build/' : './build-distribution/')
   },
 
   devtool: 'source-map',

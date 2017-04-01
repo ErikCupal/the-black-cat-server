@@ -1,6 +1,7 @@
 node_modules/
 typings/
 build/
+dist/
 coverage/
 doc/
 .deployment

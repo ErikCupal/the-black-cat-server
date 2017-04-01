@@ -54,16 +54,20 @@ export const createCore = (io: SocketIO.Server): Core => {
    */
   const subject = new Subject<ClientMessage | LogicMessage | StateMessage>()
 
+  const isProduction = process.env.NODE_ENV === 'production'
+
   /**
    * Game state [store](http://redux.js.org/docs/basics/Store.html)
    * In development enviroment the state can be
    * observed by [Redux Remote DevTools](https://github.com/zalmoxisus/remote-redux-devtools).
    * This is very useful for debugging.
    */
-  const store = createStore(reducer, devToolsEnhancer({
-    name: 'The Black Cat',
-    realtime: true,
-  }) as object) as Store<State>
+  const store = isProduction
+    ? createStore(reducer) as Store<State>
+    : createStore(reducer, devToolsEnhancer({
+      name: 'The Black Cat',
+      realtime: true,
+    }) as object) as Store<State>
 
   /**
    * The store can be used for logging all sorts of messages.
