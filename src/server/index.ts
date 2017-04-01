@@ -6,6 +6,8 @@ const createServer = (): http.Server => {
   const app = Express()
   const server = http.createServer(app)
 
+  // When someone enters the server address in browser,
+  // it shows this basic website
   app.get('/', (req, res) => {
     res.send(`
       <!DOCTYPE html>
