@@ -3,6 +3,11 @@ import { PlayerScore } from './PlayerScore'
 import { Name } from './Name'
 import { ServerMessage } from '../types/Messages/ServerMessage'
 
+/** 
+ * Room
+ * 
+ * Can't have more than 4 players.
+ */
 export interface Room {
   readonly name: Name
   readonly players: Name[]

@@ -9,6 +9,7 @@ const log = console.log
 /** Port on which server listens */
 const port: number = process.env.PORT || 3000
 const server = createServer()
+/** Serverside WebSockets library */
 const socketIO = SocketIO(server)
 const gameCore = createCore(socketIO)
 

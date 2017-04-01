@@ -14,6 +14,7 @@ import { Room } from '../../types/Room'
 import { State } from '../../types/State'
 import { getHighestCardOnTable, getPenaltyPoints } from './cards'
 
+/** Creates functions that need access to the current game state. */
 export const createStateDependentFunctions = (getState: () => State) => {
 
   const findPlayer = (playerName: string | undefined): Player | undefined => {

@@ -40,11 +40,7 @@ export interface Player extends NonregisteredPlayer {
   readonly name: Name
 }
 
-/**
- * Bot
- * 
- * Acts as registered player.
- */
+/** Acts as registered player. */
 export interface Bot extends Player {
   readonly isBot: true
   /**

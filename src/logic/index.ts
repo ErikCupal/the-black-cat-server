@@ -47,8 +47,8 @@ export type MessageHandlersDI =
   }
 
 /**
- * Creates message handlers with dependency injection and attaches them
- * to corresponding message types
+ * Creates message handlers with dependency injection and
+ * attaches them to corresponding message types.
  */
 export const configureMessageHandlers = (
   core: Core,

@@ -1,6 +1,6 @@
 /**
  * A Promise wrapper for [setTimeout] function.
- * When used with `await` keyword, it is a consise way of
+ * When used with `await` keyword, it is a consise way
  * to pause function execution.
  * 
  * Example:
