@@ -8,11 +8,13 @@ import {
   handOverIsValid,
   isLastRound,
   normalizePlayerIndex,
+  playedCardIsValid,
   playerCanBeReady,
   playerCanHaveDealtDeck,
   playerCanTakeHandOver,
   playerHasExactSpaceForHandOver,
   playerHasHandover,
+  playersAreReadyToPlay,
   tableIsFull,
 } from '../../src/logic/functions'
 
@@ -79,6 +81,7 @@ test('normalizePlayerIndex works for values 0 - 8', () => {
 })
 
 describe('validators work', () => {
+
   test('handOverIsValid', () => {
 
     const player1: Player = {
@@ -139,7 +142,28 @@ describe('validators work', () => {
     })
   })
 
-  // TODO: test('playedCardIsValid', () => { })
+  test('playedCardIsValid', () => {
+    const table = [
+      CARDS.DIAMONDS.JACK,
+      CARDS.HEARTS.EIGHT,
+    ]
+    const game1 = {
+      ...gameTemplate,
+      table,
+      playerOnTurn: 'john',
+    }
+    const game2 = { ...game1, playerOnTurn: 'bob' }
+    const player1 = { ...playerTemplate, name: 'bob' }
+    const player2 = { ...player1, game: () => game1 }
+    const player3 = { ...player2, game: () => game2 }
+    const player4 = { ...player3, hand: handTemplate }
+
+    expect(playedCardIsValid(CARDS.DIAMONDS.QUEEN, player1)).toBeFalsy()
+    expect(playedCardIsValid(CARDS.DIAMONDS.QUEEN, player2)).toBeFalsy()
+    expect(playedCardIsValid(CARDS.DIAMONDS.QUEEN, player3)).toBeFalsy()
+    expect(playedCardIsValid(CARDS.HEARTS.SEVEN, player4)).toBeFalsy()
+    expect(playedCardIsValid(CARDS.DIAMONDS.QUEEN, player4)).toBeTruthy()
+  })
 
   test('playerCanHaveDealtDeck', () => {
     const player1: Player = playerTemplate
@@ -160,7 +184,20 @@ describe('validators work', () => {
     })
   })
 
-  // TODO: test('playerCanBeReady', () => { })
+  test('playerCanBeReady', () => {
+    const game1 = gameTemplate
+    const player1 = { ...playerTemplate, name: 'bob' }
+    const player2 = { ...player1, game: () => game1 }
+    const player3 = { ...player2, didPassedHandOver: true }
+    const player4 = { ...player3, hand: handTemplate }
+    const player5 = { ...player4, handOver: [CARDS.CLUBS.ACE] }
+
+    expect(playerCanBeReady(player1)).toBeFalsy()
+    expect(playerCanBeReady(player2)).toBeFalsy()
+    expect(playerCanBeReady(player3)).toBeFalsy()
+    expect(playerCanBeReady(player4)).toBeTruthy()
+    expect(playerCanBeReady(player5)).toBeFalsy()
+  })
 
   test('playerHasHandover', () => {
     const player1: Player = playerTemplate
@@ -226,6 +263,38 @@ describe('validators work', () => {
     expect(isLastRound(8)).toBeTruthy()
     expect(isLastRound(9)).toBeFalsy()
   })
+
+  test('playersAreReadyToPlay', () => {
+    const player1 = playerTemplate
+    const player2 = { ...player1, didPassedHandOver: true }
+    const player3 = { ...player2, waitForMe: true }
+    const player4 = { ...player3, hand: handTemplate }
+    const player5 = { ...player4, handOver: [CARDS.CLUBS.ACE] }
+    const player6 = { ...player5, handOver: [] }
+    const player7 = { ...player6, waitForMe: false }
+
+    const players1 = [player7, player1, player1, player1]
+    const players2 = [player7, player2, player2, player2]
+    const players3 = [player7, player3, player3, player3]
+    const players4 = [player7, player4, player4, player4]
+    const players5 = [player7, player5, player5, player5]
+    const players6 = [player7, player6, player6, player6]
+    const players7 = [player7, player7, player7, player7]
+
+    expect(playersAreReadyToPlay(players1)).toBeFalsy()
+    expect(playersAreReadyToPlay(players2)).toBeFalsy()
+    expect(playersAreReadyToPlay(players3)).toBeFalsy()
+    expect(playersAreReadyToPlay(players4)).toBeFalsy()
+    expect(playersAreReadyToPlay(players5)).toBeFalsy()
+    expect(playersAreReadyToPlay(players6)).toBeFalsy()
+    expect(playersAreReadyToPlay(players7)).toBeTruthy()
+  })
+
+  // TODO:  test('playersHaveDeckDealt', () => {})
+  // TODO:  test('playersWantNewGame', () => {})
+  // TODO:  test('roomIsFull', () => {})
+  // TODO:  test('createLatestScores', () => {})
+  // TODO:  test('getPlayersGrills', () => {})
 })
 
 // TODO: describe('getBotResponse', () => {

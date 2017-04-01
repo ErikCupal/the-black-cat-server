@@ -75,7 +75,7 @@ export const playedCardIsValid = (card: Card, player: Player): boolean => {
       return true
     }
     const { hand, grills } = player
-    const cardOfSameSuit = (hand.concat(grills)).find(cardIsOfSuit(firstTableCard.suit))
+    const cardOfSameSuit = ([...hand, ...grills]).find(cardIsOfSuit(firstTableCard.suit))
     if (!cardOfSameSuit) {
       return true
     }
@@ -98,7 +98,7 @@ export const playerCanHaveDealtDeck = (player: Player): boolean => {
 export const playerCanBeReady = (player: Player): boolean => {
   return player.game() !== undefined
     && player.didPassedHandOver === true
-    && player.hand.concat(player.grills).length === 8
+    && [...player.hand, ...player.grills].length === 8
     && player.handOver.length === 0
 }
 
@@ -119,7 +119,7 @@ export const playersAreReadyToPlay = (players: Player[]): boolean => {
       .filter(p => {
         return p.didPassedHandOver === true
           && p.waitForMe === false
-          && p.hand.concat(p.grills).length === 8
+          && [...p.hand, ...p.grills].length === 8
           && p.handOver.length === 0
       })
   return playersReady.length === 4

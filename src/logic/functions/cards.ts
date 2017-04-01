@@ -136,7 +136,7 @@ export const createDeck = (): Deck => {
         return cardsOfSuit
       }, [] as Card[])
 
-      return cards.concat(completeSuit)
+      return [...cards, ...completeSuit]
     }, [] as Card[])
 
   return deck
