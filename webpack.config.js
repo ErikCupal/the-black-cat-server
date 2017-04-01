@@ -40,5 +40,5 @@ const config = (debug) => ({
 
 module.exports = (env = {}) => {
   const debug = env.NODE_ENV !== 'production'
-  return config(config())
+  return config(debug)
 }
