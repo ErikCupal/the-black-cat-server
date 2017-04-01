@@ -50,7 +50,11 @@ export type MessageHandlersDI =
  * Creates message handlers with dependency injection and attaches them
  * to corresponding message types
  */
-export const configureMessageHandlers = (core: Core, log: typeof console.log, seconds: (seconds: number) => Promise<void>) => {
+export const configureMessageHandlers = (
+  core: Core,
+  log: typeof console.log,
+  seconds: (seconds: number) => Promise<void>,
+) => {
 
   // Create dependency injection
 
@@ -58,7 +62,7 @@ export const configureMessageHandlers = (core: Core, log: typeof console.log, se
   const stateDependantFunctions = createStateDependentFunctions(getState)
   const createBot = stateDependantFunctions.botCreatorFactory(dispatch, seconds, shuffle)
 
-  const di: MessageHandlersDI = {
+  const injection: MessageHandlersDI = {
     ...stateDependantFunctions,
     dispatch,
     log,
@@ -69,10 +73,10 @@ export const configureMessageHandlers = (core: Core, log: typeof console.log, se
   // Create message handlers with injected dependencies
 
   const handlers = {
-    ...createConnectionMessageHandlers(di),
-    ...createGameMessageHandlers(di),
-    ...createRoomMessageHandlers(di),
-    ...createRoundMessageHandlers(di),
+    ...createConnectionMessageHandlers(injection),
+    ...createGameMessageHandlers(injection),
+    ...createRoomMessageHandlers(injection),
+    ...createRoundMessageHandlers(injection),
   }
 
   // Subscribe the message handlers to corresponding message types

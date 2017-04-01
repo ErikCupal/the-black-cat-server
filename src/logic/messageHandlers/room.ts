@@ -7,7 +7,7 @@ import { MessageHandlersDI } from '../'
 import { LOGIC_GAME_START, LOGIC_PLAYER_JOINED_ROOM, LOGIC_ROOM_START } from '../../types/Messages/LogicMessage'
 import { Room } from '../../types/Room'
 
-export const createRoomMessageHandlers = (di: MessageHandlersDI) => {
+export const createRoomMessageHandlers = (injection: MessageHandlersDI) => {
 
   const {
     dispatch,
@@ -18,7 +18,7 @@ export const createRoomMessageHandlers = (di: MessageHandlersDI) => {
     seconds,
     getRoomNamesAndAvailability,
     getAllPlayers,
-  } = di
+  } = injection
 
   const onRoomStart = ({ name }: LOGIC_ROOM_START) => {
     dispatch({ type: LOGIC_GAME_START, roomName: name, newRoom: true })

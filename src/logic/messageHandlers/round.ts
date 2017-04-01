@@ -15,7 +15,7 @@ import {
 } from '../../types/Messages/StateMessage'
 import { Room } from '../../types/Room'
 
-export const createRoundMessageHandlers = (di: MessageHandlersDI) => {
+export const createRoundMessageHandlers = (injection: MessageHandlersDI) => {
 
   const {
     findRoom,
@@ -25,7 +25,7 @@ export const createRoundMessageHandlers = (di: MessageHandlersDI) => {
     getPlayerWithHighestCard,
     dispatch,
     getPlayerOnLeftName,
-  } = di
+  } = injection
 
   const onNextRound = async ({ roomName }: LOGIC_NEXT_ROUND) => {
     const room = findRoom(roomName) as Room

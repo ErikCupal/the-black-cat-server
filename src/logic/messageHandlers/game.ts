@@ -60,7 +60,7 @@ import {
 } from '../functions'
 import { createDeck, getPlayerHand } from '../functions/cards'
 
-export const createGameMessageHandlers = (di: MessageHandlersDI) => {
+export const createGameMessageHandlers = (injection: MessageHandlersDI) => {
 
   const {
     dispatch,
@@ -70,7 +70,7 @@ export const createGameMessageHandlers = (di: MessageHandlersDI) => {
     getGameScores,
     getPlayerOnLeft,
     getGameStartingPlayer,
-  } = di
+  } = injection
 
   const dealCards = (room: Name) => {
     const deck = shuffle(createDeck())

@@ -37,7 +37,7 @@ import { Name } from '../../types/Name'
 import { Bot, Player } from '../../types/Player'
 import { Room } from '../../types/Room'
 
-export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
+export const createConnectionMessageHandlers = (injection: MessageHandlersDI) => {
 
   const {
     log,
@@ -52,7 +52,7 @@ export const createConnectionMessageHandlers = (di: MessageHandlersDI) => {
     getPlayersInRoom,
     createBot,
     isRealPlayerInRoom,
-  } = di
+  } = injection
 
   const sendAllPlayersRoomsList = () => {
     const rooms = getRoomNamesAndAvailability()
