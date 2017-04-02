@@ -9,9 +9,9 @@
     "distribution": "gulp dist",
     "start": "npm run build && node ./build/index.js",
     "launch": "node ./build/index.js",
-    "test": "jest --coverage",
-    "test:no-coverage": "jest",
-    "report-coverage": "cat ./coverage/lcov.info | codecov",
+    "test": "npm run lint && jest --coverage",
+    "test:barebone": "jest",
+    "report-coverage": "codecov",
     "lint": "tslint ./src/**/*.ts ./tests/**/*.ts",
     "doc": "typedoc --options typedoc.json"
   },
@@ -48,7 +48,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "codecov.io": "^0.1.6",
+    "codecov": "^2.1.0",
     "ghooks": "^2.0.0",
     "gulp": "^3.9.1",
     "jest": "^19.0.2",
@@ -76,7 +76,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run test:no-coverage"
+      "pre-commit": "npm run lint && npm run test:barebone"
     }
   }
 }
