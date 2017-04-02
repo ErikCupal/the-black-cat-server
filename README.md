@@ -1,6 +1,6 @@
 # The Black Cat - Server
 
-## About
+[![Travis branch](https://img.shields.io/travis/ErikCupal/the-black-cat-server/master.svg)](https://travis-ci.org/ErikCupal/the-black-cat-server)
 
 The Black Cat is an online multiplayer card game. It consists of two parts: a Node.js [server](https://github.com/ErikCupal/the-black-cat-server) and [client](https://github.com/ErikCupal/the-black-cat-client) app written in Kotlin and based on LibGDX game framework.
 
