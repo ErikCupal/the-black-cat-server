@@ -35,7 +35,15 @@ const config = (debug) => ({
         ]
       },
     ]
-  }
+  },
+
+  plugins: debug
+    ? []
+    : [
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production')
+      })
+    ]
 })
 
 module.exports = (env = {}) => {
