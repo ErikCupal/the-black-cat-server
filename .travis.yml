@@ -1,7 +1,12 @@
 language: node_js
 node_js: "node"
+cache:
+  directories:
+    - node_modules
+before_script:
+  - npm prune
 script:
-  - "npm run build"
-  - "npm run distribution"
+  - npm run build
+  - npm run distribution
 git:
   depth: 3
