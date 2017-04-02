@@ -8,7 +8,7 @@ before_script:
 script:
   - npm run build
   - npm run distribution
-after-success:
+after_success:
   - npm run report-coverage
 git:
   depth: 3
