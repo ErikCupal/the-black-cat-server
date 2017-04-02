@@ -91,7 +91,7 @@ export const getCardPoints = (heartsGrillCoeficient: number, blackCatGrilled: bo
     }
     case 'Spades': {
       switch (card.rank) {
-        case 'Queen': return 11 * (blackCatGrilled ? 2 : 1)
+        case 'Queen': return 13 * (blackCatGrilled ? 2 : 1)
         default: return 0
       }
     }

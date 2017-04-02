@@ -222,11 +222,11 @@ describe('getCardPoints', () => {
     ]
 
     getPointWithCatNotGrilled.forEach(getPointsFunction => {
-      expect(getPointsFunction(THE_BLACK_CAT_CARD)).toBe(11)
+      expect(getPointsFunction(THE_BLACK_CAT_CARD)).toBe(13)
     })
 
     getPointWithCatGrilled.forEach(getPointsFunction => {
-      expect(getPointsFunction(THE_BLACK_CAT_CARD)).toBe(22)
+      expect(getPointsFunction(THE_BLACK_CAT_CARD)).toBe(26)
     })
   })
 
@@ -255,12 +255,12 @@ test('getPenaltyPoints works for full deck', () => {
 
   const getFullPilePoints = (grills: Grills) => getPenaltyPoints(grills)(fullPile)
 
-  expect(getFullPilePoints(emptyGrill)).toBe(29)
-  expect(getFullPilePoints(heartsGrilled)).toBe(47)
-  expect(getFullPilePoints(heartsDoubleGrilled)).toBe(65)
-  expect(getFullPilePoints(blackCatGrilled)).toBe(40)
-  expect(getFullPilePoints(blackCatAndHeartsGrilled)).toBe(58)
-  expect(getFullPilePoints(blackCatAndHeartsDoubleGrilled)).toBe(76)
+  expect(getFullPilePoints(emptyGrill)).toBe(31)
+  expect(getFullPilePoints(heartsGrilled)).toBe(49)
+  expect(getFullPilePoints(heartsDoubleGrilled)).toBe(67)
+  expect(getFullPilePoints(blackCatGrilled)).toBe(44)
+  expect(getFullPilePoints(blackCatAndHeartsGrilled)).toBe(62)
+  expect(getFullPilePoints(blackCatAndHeartsDoubleGrilled)).toBe(80)
 })
 
 test('createDeck', () => {
