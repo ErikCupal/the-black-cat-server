@@ -5,6 +5,7 @@ import { ClientMessage, CONNECT } from '../types/Messages/ClientMessage'
 import { Subject, Observable } from 'rxjs'
 import { createStore, Store, Reducer } from 'redux'
 import reducer from './reducer'
+import devToolsEnhancer from 'remote-redux-devtools'
 import onSocketConnect from './onSocketConnect'
 
 /** 
@@ -63,7 +64,7 @@ export const createCore = (io: SocketIO.Server): Core => {
    */
   const store = isProduction
     ? createStore(reducer) as Store<State>
-    : createStore(reducer, require('remote-redux-devtools').default({
+    : createStore(reducer, devToolsEnhancer({
       name: 'The Black Cat',
       realtime: true,
     }) as object) as Store<State>
