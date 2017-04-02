@@ -4,7 +4,6 @@ import { LogicMessage } from '../types/Messages/LogicMessage'
 import { ClientMessage, CONNECT } from '../types/Messages/ClientMessage'
 import { Subject, Observable } from 'rxjs'
 import { createStore, Store, Reducer } from 'redux'
-import devToolsEnhancer from 'remote-redux-devtools'
 import reducer from './reducer'
 import onSocketConnect from './onSocketConnect'
 
@@ -64,7 +63,7 @@ export const createCore = (io: SocketIO.Server): Core => {
    */
   const store = isProduction
     ? createStore(reducer) as Store<State>
-    : createStore(reducer, devToolsEnhancer({
+    : createStore(reducer, require('remote-redux-devtools').default({
       name: 'The Black Cat',
       realtime: true,
     }) as object) as Store<State>
