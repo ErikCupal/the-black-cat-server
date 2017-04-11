@@ -4,6 +4,8 @@
 
 The Black Cat is an online multiplayer card game. It consists of two parts: Node.js [server](https://github.com/ErikCupal/the-black-cat-server) and [client](https://github.com/ErikCupal/the-black-cat-client) app written in Kotlin and based on LibGDX game framework.
 
+### [Website](https://theblackcat.club)
+
 ### [Client app repo](https://github.com/ErikCupal/the-black-cat-client)
 
 ## Official active servers (🔥 still under development 🔥)
@@ -74,6 +76,14 @@ server {
 * [Redux](https://github.com/reactjs/redux)
 * [RxJS 5](https://github.com/ReactiveX/rxjs)
 * [Lodash](https://github.com/lodash/lodash)
+
+## How to experiment
+
+1. Make sure you have installed latest version of [Node.js](https://nodejs.org/)
+1. Clone the repo
+1. Install dependencies - run `npm install` command
+1. Make changes
+1. Build, test, lint etc. by running the right npm script. Take a look in `package.json`>`scripts`.
 
 ## License
 
