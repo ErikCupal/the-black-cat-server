@@ -77,6 +77,8 @@ server {
 * [RxJS 5](https://github.com/ReactiveX/rxjs)
 * [Lodash](https://github.com/lodash/lodash)
 
+And more... all listed in `package.json`>dependencies
+
 ## How to experiment
 
 1. Make sure you have installed latest version of [Node.js](https://nodejs.org/)
@@ -84,6 +86,10 @@ server {
 1. Install dependencies - run `npm install` command
 1. Make changes
 1. Build, test, lint etc. by running the right npm script. Take a look in `package.json`>`scripts`.
+
+## Future (possible features)
+
+* Improve bots' intelligence using machine learning ([Synaptic](https://github.com/cazala/synaptic) seems like a good fit for it)
 
 ## License
 
